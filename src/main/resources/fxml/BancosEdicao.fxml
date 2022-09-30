@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" styleClass="fundo" stylesheets="@../styles/tema.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.newmark.Controller_BancosEdicao">
+    <children>
+      <JFXButton fx:id="botaoVoltar" layoutX="118.0" layoutY="452.0" onAction="#retornaMenu" prefHeight="27.0" prefWidth="218.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Retornar para o menu anterior">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <FontAwesomeIcon fill="WHITE" iconName="REFRESH" layoutX="771.0" layoutY="354.0" text="" />
+      <TableView fx:id="tabelaBancos" layoutX="476.0" layoutY="33.0" onMouseClicked="#selecionar" onMouseEntered="#atualizar" prefHeight="300.0" prefWidth="400.0" stylesheets="@../styles/tabela.css">
+        <columns>
+            <TableColumn fx:id="colunaSigla" editable="false" minWidth="-Infinity" prefWidth="50.0" resizable="false" text="Sigla" />
+            <TableColumn fx:id="colunaNome" minWidth="-Infinity" prefWidth="245.0" text="Nome" />
+            <TableColumn fx:id="colunaNetiquetas" minWidth="-Infinity" prefWidth="100.0" text="Nº de Etiquetas" />
+        </columns>
+        <!--
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#alterarEtiquetas" text="Editar" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+         -->
+      </TableView>
+      <HBox spacing="20.0" />
+      <JFXTextField fx:id="textoBanco" focusColor="WHITE" labelFloat="true" layoutX="557.0" layoutY="370.0" prefHeight="25.0" prefWidth="283.0" promptText="Nome do banco" unFocusColor="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXTextField>
+      <JFXButton fx:id="botaoInserir" alignment="CENTER" buttonType="RAISED" layoutX="516.0" layoutY="415.0" onAction="#inserir" prefHeight="27.0" prefWidth="150.0" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Inserir Banco">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="botaoExcluir" alignment="CENTER" buttonType="RAISED" layoutX="689.0" layoutY="415.0" onAction="#excluir" prefHeight="27.0" prefWidth="150.0" styleClass="botaoVermelho" stylesheets="@../styles/botoes.css" text="Excluir Banco">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXButton>
+      <FontAwesomeIcon fill="WHITE" iconName="SAVE" layoutX="530.0" layoutY="435.0" size="15" />
+      <FontAwesomeIcon fill="#111111" iconName="CARET_LEFT" layoutX="128.0" layoutY="473.0" size="20" />
+      <FontAwesomeIcon fill="#fff9f9" iconName="TRASH" layoutX="700.0" layoutY="433.0" size="16" />
+      <JFXTabPane />
+      <Label layoutX="784.0" layoutY="340.0" text="Atualizar tabela" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <JFXButton fx:id="atualizar" buttonType="RAISED" layoutX="754.0" layoutY="337.0" onAction="#atualizar" prefHeight="25.0" prefWidth="132.0" ripplerFill="TRANSPARENT" textFill="TRANSPARENT" />
+      <JFXTextField fx:id="textoSigla" focusColor="WHITE" labelFloat="true" layoutX="496.0" layoutY="370.0" prefHeight="25.0" prefWidth="50.0" promptText="Sigla" styleClass="TextField" unFocusColor="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXTextField>
+      <VBox layoutX="36.0" layoutY="43.0" prefHeight="280.0" prefWidth="398.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="25.0" prefWidth="428.0" text="Informações ao usuário:" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="145.0" prefWidth="397.0" text="O Bancos de Dados do Sistema de Triagem Mark, é um conjuntos de informações relacionadas entre si com registros sobre frases chaves, complementos, etiquetas, pesos, tipos de triagem, modo de triagem, configurações do Sistema, cabeçalhos, providências jurídicas, entro outros. É uma coleção organizada de dados que se relacionam de forma adequada para a garantir a eficiência durante o processo de triagem." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="35.0" prefHeight="107.0" prefWidth="397.0" text="A edição de bancos, permite ao usuário criar seus próprios bancos de dados, ou seja, o usuário é capaz de dizer ao sistema com quais grupos de etiquetas deseja trabalhar, lembre-se que que cada triagem realizada leva em consideração as informaçõs presentes em um único grupo de etiquetas." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <JFXButton fx:id="editarEtiquetas" alignment="CENTER" buttonType="RAISED" layoutX="516.0" layoutY="452.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#editarEtiquetas" prefHeight="26.0" prefWidth="324.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Editar Etiquetas">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <FontAwesomeIcon fill="WHITE" iconName="ERASER" layoutX="844.0" layoutY="391.0" size="25" />
+      <JFXButton fx:id="botaoLimpar" layoutX="837.0" layoutY="370.0" onAction="#limpar" prefHeight="25.0" prefWidth="40.0" ripplerFill="TRANSPARENT" style="-fx-background-color: transparent;" text=" " />
+   </children>
+</AnchorPane>
