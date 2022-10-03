@@ -28,11 +28,10 @@ public class Triagem_Etiquetas {
 				if (identificadorDePeticao) {
 					stmt = connection.prepareStatement("SELECT * FROM identificador_materia ORDER BY prioridade DESC");
 					//public boolean peticaoTrue = true;
-				} else {
 
+				} else {
 					stmt = connection.prepareStatement(
 							"SELECT * FROM etiquetas WHERE tipo = '" + localtriagem + "' ORDER BY prioridade DESC");
-
 				}
 
 				resultSet = stmt.executeQuery();
@@ -40,18 +39,17 @@ public class Triagem_Etiquetas {
 				while (resultSet.next()) {
 					String PALAVRACHAVE = resultSet.getString("palavrachave");
 					PALAVRACHAVE = tratamento.tratamento(PALAVRACHAVE);
+					if (PALAVRACHAVE.equals("HISTÓRICO DE LAUDOS MÉDICOS PERICIAIS")){
+						System.out.println(PALAVRACHAVE);
+					}
 					String COMPLEMENTO = resultSet.getString("complemento");
 					COMPLEMENTO = tratamento.tratamento(COMPLEMENTO);
-					String BANCO = "";
-					if (identificadorDePeticao){
-
-					}else {
-						 BANCO = resultSet.getString("banco");
-					}
-
+					String BANCO = resultSet.getString("banco");
+					BANCO.replace(" ","");
+					String bancoComSpacee = banco + " ";
 					System.out.println(BANCO);
 					System.out.println(banco);
-					if (identificadorDePeticao){
+					if (BANCO.equalsIgnoreCase(banco) || BANCO.equalsIgnoreCase(bancoComSpacee)){
 						if (processo.contains(PALAVRACHAVE) && processo.contains(COMPLEMENTO)) {
 							//resultado.setId(resultSet.getInt("id"));
 							resultado.setPalavraChave(resultSet.getString("id"));
@@ -59,23 +57,6 @@ public class Triagem_Etiquetas {
 								resultado.setSubnucleo(resultSet.getString("subnucleo"));
 							}
 							resultado.setEtiqueta(resultSet.getString("etiqueta"));
-					resultSet.getString("etiqueta");
-					if (resultSet.wasNull()) {
-							resultado.setEtiqueta(resultSet.getString("etiqueta"));
-						} else {
-						resultado.setEtiqueta(resultSet.getString("etiqueta"));
-						}
-
-							connection.close();
-							return resultado;
-						}
-					} else if (processo.contains(PALAVRACHAVE) && processo.contains(COMPLEMENTO) && BANCO.contains(banco)) {
-						//resultado.setId(resultSet.getInt("id"));
-						resultado.setPalavraChave(resultSet.getString("id"));
-						if (identificadorDePeticao) {
-							resultado.setSubnucleo(resultSet.getString("subnucleo"));
-						}
-						resultado.setEtiqueta(resultSet.getString("etiqueta"));
 //						resultSet.getString("etiqueta");
 //						if (resultSet.wasNull()) {
 //							resultado.setEtiqueta(resultSet.getString("subnucleo"));
@@ -83,9 +64,11 @@ public class Triagem_Etiquetas {
 //							resultado.setEtiqueta(resultSet.getString("subnucleo") + "/" + resultSet.getString("etiqueta"));
 //						}
 
-						connection.close();
-						return resultado;
+							connection.close();
+							return resultado;
+						}
 					}
+
 
 				}
 				connection.close();
@@ -100,5 +83,3 @@ public class Triagem_Etiquetas {
 		return resultado;
 	}
 }
-
-

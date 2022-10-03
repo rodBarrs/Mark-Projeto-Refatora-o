@@ -374,7 +374,6 @@ public class Controller_Login implements Initializable {
 		SaidaTriagem.setText("- Triagem Parada!");
 		som();
 		try {
-
 			driver.quit();
 			backgroundThread.stop();
 		} catch (Exception e) {
