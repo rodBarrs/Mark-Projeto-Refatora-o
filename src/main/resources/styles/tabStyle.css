@@ -1,0 +1,40 @@
+/**
+ * @author Felipe Marques
+ * 
+ */
+.jfx-tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane {
+    -fx-tab-min-width:90px;
+}
+
+.tab {
+    -fx-background-insets: 0 1 0 1,0,0;
+    
+}
+.tab-pane .tab {
+    -fx-background-color: linear-gradient(from 30px 100px to 1000px 500px,#57788e,#53a67e);
+
+}
+
+.jfx-tab-pane .tab:selected {
+    
+    -fx-background-color:  linear-gradient(from 30px 100px to 1000px 500px,#6c8494,#53a67e);
+}
+.jfx-tab-pane {
+    -fx-background-color: linear-gradient(to right,#6c8494,#53a67e);
+}
+
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ffffff;
+}

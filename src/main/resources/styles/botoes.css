@@ -1,0 +1,85 @@
+/**
+ * @author Felipe Marques
+ * 
+ */
+.botaoRoxo {
+    -fx-background-color: #564875;
+    -fx-text-fill: #FFFFFF;
+}
+.botaoRoxo:hover {
+    -fx-background-color: linear-gradient(to right, #564875 90%,transparent);
+    -fx-text-fill: #FFFFFF;
+}
+.botaoRoxo:pressed, botaoRoxo:hover:pressed {
+    -fx-background-color: linear-gradient(to right, #564875 90%,transparent);
+    -fx-text-fill: #FFFFFF;
+}
+
+.botaoVerde {
+    -fx-background-color: #3f6b5c;
+    -fx-text-fill: #ededed;
+}
+.botaoVerde:hover {
+    -fx-background-color: linear-gradient(to right,#3f6b5c 90%,transparent);
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: transparent;
+}
+.botaoVerde:pressed, .botaoVerde:hover:pressed {
+    -fx-background-color: linear-gradient(to right,#3f6b5c 90%,transparent);
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: transparent;
+}
+
+.botaoAzul {
+    -fx-background-color: #324d6b;
+    -fx-text-fill: #FFFFFF;
+}
+.botaoAzul:hover {
+    -fx-background-color: linear-gradient(to right, #324d6b 90%,transparent);
+    -fx-text-fill: #FFFFFF;
+}
+.botaoAzul:pressed, .botaoAzul:hover:pressed {
+    -fx-background-color: linear-gradient(to right, #324d6b 90%,transparent);
+    -fx-text-fill: #FFFFFF;
+}
+
+.botaoVermelho {
+    -fx-background-color: #942925;
+    -fx-text-fill: #FFFFFF;
+}
+.botaoVermelho:hover {
+    -fx-background-color: linear-gradient(to right,#a83d39 84%,transparent);
+    -fx-text-fill: #FFFFFF;
+}
+.botaoVermelho:pressed, .botaoVermelho:hover:pressed {
+    -fx-background-color: linear-gradient(to right,#a83d39 84%,transparent);
+    -fx-text-fill: #FFFFFF;
+}
+
+.botaoBranco {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill:  #393838;
+}
+.botaoBranco:hover {
+    -fx-background-color: linear-gradient(to right,#d8e5f0 90%,transparent);
+    -fx-text-fill: #393838;
+    -fx-border-color: transparent;
+}
+.botaoBranco:pressed, .botaoBranco:hover:pressed {
+    -fx-background-color: linear-gradient(to right,#d8e5f0 90%,transparent);
+    -fx-text-fill: #393838;
+    -fx-border-color: transparent;
+}
+
+.botaoBordo {
+    -fx-background-color: #5e2129;
+    -fx-text-fill: #FFFFFF;
+}
+.botaoBordo:hover {
+    -fx-background-color: linear-gradient(to right,#5e2129 84%,transparent);
+    -fx-text-fill: #FFFFFF;
+}
+.botaoBordo:pressed, .botaoBordo:hover:pressed {
+    -fx-background-color: linear-gradient(to right,#5e2129 84%,transparent);
+    -fx-text-fill: #FFFFFF;
+}

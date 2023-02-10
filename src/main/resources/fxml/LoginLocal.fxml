@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="171.0" prefWidth="315.0" style="-fx-background-color: #03A88A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.newmark.controllers.LoginLocal">
+   <children>
+      <JFXTextField fx:id="labelUsuario" focusColor="WHITE" layoutX="19.0" layoutY="19.0" prefHeight="25.0" prefWidth="278.0" promptText="Usuário" unFocusColor="WHITE" />
+      <JFXPasswordField fx:id="passwordUsuario" focusColor="WHITE" layoutX="19.0" layoutY="59.0" prefHeight="25.0" prefWidth="278.0" promptText="Senha" unFocusColor="WHITE" />
+      <JFXTextField fx:id="passwordUsuarioVisivel" focusColor="WHITE" layoutX="19.0" layoutY="59.0" prefHeight="25.0" prefWidth="278.0" unFocusColor="WHITE" visible="false" />
+      <JFXButton fx:id="btnLogar" defaultButton="true" layoutX="18.0" layoutY="130.0" onAction="#logarUsuario" prefHeight="25.0" prefWidth="278.0" style="-fx-background-color: #03598C;" text="Entrar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXCheckBox fx:id="radialExibirSenha" checkedColor="#31dda1" layoutX="111.0" layoutY="99.0" onAction="#toggleExibicaoSenha" prefHeight="18.0" prefWidth="97.0" text="Exibir Senha" textFill="WHITE" unCheckedColor="WHITE" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,24 @@
+/**
+ * @author Felipe Marques
+ * 
+ */
+.areaSaida{
+    -fx-text-fill:#ffffff;
+    -fx-text-alignment: center;
+}
+.areaAviso{
+    -fx-text-fill:#ffffff;
+    -fx-text-alignment: center;
+}
+ 
+.fundo {
+    -fx-background-color:linear-gradient(from 30px 100px to 1000px 500px,#6c8494,#53a67e);
+    -fx-border-color: linear-gradient(from 510px 290px to 390px 0px,#146965,#53a67e);
+}
+
+.fundoAviso {
+    -fx-background-color:linear-gradient(from 30px 100px to 1000px 500px,#6c8494,#53a67e);
+    -fx-border-color: linear-gradient(from 510px 290px to 390px 0px,#146965,#53a67e);
+    -fx-border-width: 10;
+    -fx-border-color: #ff0000;
+}

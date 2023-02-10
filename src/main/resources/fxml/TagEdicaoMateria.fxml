@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="449.0" prefWidth="505.0" styleClass="fundo" stylesheets="@../styles/tema.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <VBox layoutX="56.0" layoutY="60.0" prefHeight="140.0" prefWidth="400.0" spacing="30.0">
+         <children>
+            <JFXTextField fx:id="PalavraChave" focusColor="#ebebeb" labelFloat="true" layoutX="70.0" layoutY="65.0" promptText="Frase Chave" unFocusColor="#fcfcfc">
+            </JFXTextField>
+            <JFXTextField fx:id="Complemento" focusColor="#fcfcfc" labelFloat="true" layoutX="70.0" layoutY="125.0" promptText="Complemento" unFocusColor="WHITE">
+            </JFXTextField>
+            <JFXTextField fx:id="Etiqueta" focusColor="#fcfcfc" labelFloat="true" promptText="Etiqueta" unFocusColor="WHITE" />
+         </children>
+      </VBox>
+      <JFXButton fx:id="salvar" buttonType="RAISED" layoutX="68.0" layoutY="384.0" onAction="#alterar" prefHeight="25.0" prefWidth="100.0" ripplerFill="#402323" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Salvar">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="cancelar" buttonType="RAISED" layoutX="345.0" layoutY="384.0" onAction="#cancelar" prefHeight="25.0" prefWidth="100.0" ripplerFill="#d04848" styleClass="botaoVermelho" stylesheets="@../styles/botoes.css" text="Cancelar">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="limparCampos" buttonType="RAISED" layoutX="202.0" layoutY="384.0" onAction="#limpar" prefHeight="25.0" prefWidth="100.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Limpar">
+      </JFXButton>
+      <Text fill="WHITE" layoutX="138.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edição de Matéria Cadastrada:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Label layoutX="186.0" layoutY="290.0" text="Selecione o peso" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <HBox layoutX="151.0" layoutY="333.0" prefHeight="27.0" prefWidth="218.0" spacing="25.0">
+         <children>
+            <RadioButton fx:id="P1" mnemonicParsing="false" prefHeight="27.0" prefWidth="34.0" selected="true" text="1">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="grupoPeso" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="P2" mnemonicParsing="false" prefHeight="27.0" prefWidth="34.0" text="2" toggleGroup="$grupoPeso">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="P3" mnemonicParsing="false" prefHeight="27.0" prefWidth="34.0" text="3" toggleGroup="$grupoPeso">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="P4" mnemonicParsing="false" prefHeight="27.0" prefWidth="34.0" text="4" toggleGroup="$grupoPeso">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </RadioButton>
+         </children>
+      </HBox>
+      <JFXComboBox fx:id="ComboBoxNucleo" focusColor="#3cd74b" layoutX="52.0" layoutY="225.0" prefHeight="44.0" prefWidth="400.0" promptText="Selecione o Núcleo" unFocusColor="WHITE" />
+   </children>
+</AnchorPane>
