@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@../styles/tabStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.newmark.controllers.Controller_Configuracao">
+   <tabs>
+      <Tab text="Configurações Avançadas">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="40.0" layoutY="60.0" prefHeight="55.0" prefWidth="393.0" text="Utilizado para realizar a triagem de itens da movimentação sem data ou que ultrapasse o limite máximo definido pelo usuário." textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="40.0" layoutY="30.0" text="Alterar Data" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="salvarAvancada" buttonType="RAISED" layoutX="309.0" layoutY="410.0" onAction="#salvarAvancada" onMouseEntered="#validarSpinner" prefHeight="25.0" prefWidth="122.0" ripplerFill="#c4c4c400" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Salvar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="voltarAvancada" layoutX="457.0" layoutY="410.0" onAction="#RetornaMenu" prefHeight="25.0" prefWidth="122.0" ripplerFill="#1e1e1e08" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Voltar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXButton>
+                  <VBox layoutX="40.0" layoutY="128.0" prefHeight="65.0" prefWidth="250.0" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="verificaData" mnemonicParsing="false" onAction="#verificaDataSelecionado" selected="true" text="Consultar Movimentações até" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="grupoTriarAntigo" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="triarAntigo" mnemonicParsing="false" onAction="#ignorarDataSelecionado" text="Ignorar Data" textFill="WHITE" toggleGroup="$grupoTriarAntigo">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <Label layoutX="470.0" layoutY="60.0" text="Identifica onde o Mark deverá buscar as palavras chaves." textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="470.0" layoutY="30.0" text="Tipo de Triagem" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="480.0" layoutY="110.0" prefHeight="100.0" prefWidth="300.0" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="tipoCOM" mnemonicParsing="false" selected="true" text="Triagem completa" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="grupoTipo" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="tipoDOC" mnemonicParsing="false" text="Triagem somente documentos" textFill="WHITE" toggleGroup="$grupoTipo">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="tipoMOV" mnemonicParsing="false" text="Triagem somente movimentação" textFill="WHITE" toggleGroup="$grupoTipo">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <Label layoutX="40.0" layoutY="260.0" prefHeight="40.0" prefWidth="378.0" text="Considera integrações em PDF na hora de selecionar documentos para a triagem, mais custoso ao procesamento. " textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="40.0" layoutY="230.0" text="Juntada Manual" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="40.0" layoutY="310.0" prefHeight="65.0" prefWidth="234.0" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="html" mnemonicParsing="false" selected="true" text="Integração HTML" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="grupoJuntada" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="pdf" mnemonicParsing="false" text="Juntada Manual (HTML e PDF)" textFill="WHITE" toggleGroup="$grupoJuntada">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <Line endX="-5.0" endY="376.0" layoutX="450.0" layoutY="22.0" opacity="0.3" startX="-5.0" stroke="WHITE" />
+                  <Line endX="424.0" endY="181.0" layoutX="460.0" layoutY="39.0" opacity="0.5" startX="-438.0" startY="181.0" stroke="WHITE" />
+                  <Spinner fx:id="spinnerDias" accessibleHelp="dias" accessibleRoleDescription="dias" accessibleText="dias" editable="true" layoutX="272.0" layoutY="126.0" prefHeight="16.0" prefWidth="69.0" />
+                  <Label layoutX="350.0" layoutY="128.0" text="dias" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </content>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="FLAG" />
+         </graphic>
+      </Tab>
+      <Tab text="Configurações Específicas">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="40.0" layoutY="60.0" prefHeight="62.0" prefWidth="370.0" text="Com está opção ativada o Mark buscará apenas por Laudos Periciais que estam dentro de pastas na movimentação do Sapiens." textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="40.0" layoutY="30.0" text="Laudo Pericial" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="salvarEspecifica" buttonType="RAISED" layoutX="309.0" layoutY="410.0" onAction="#salvarEspecificas" prefHeight="25.0" prefWidth="122.0" ripplerFill="#c4c4c400" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Salvar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="voltarEspecifica" layoutX="457.0" layoutY="410.0" onAction="#RetornaMenu" prefHeight="25.0" prefWidth="122.0" ripplerFill="#1e1e1e08" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Voltar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXButton>
+                  <VBox layoutX="45.0" layoutY="128.0" prefHeight="65.0" prefWidth="150.0" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="desativadoPericial" mnemonicParsing="false" selected="true" text="Desativado" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="grupoPericial" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="ativadoPericial" mnemonicParsing="false" text="Ativado" textFill="WHITE" toggleGroup="$grupoPericial">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="480.0" layoutY="110.0" prefHeight="100.0" prefWidth="300.0" spacing="15.0" />
+                  <VBox layoutX="50.0" layoutY="300.0" prefHeight="65.0" prefWidth="234.0" spacing="15.0" />
+                  <VBox layoutX="480.0" layoutY="300.0" prefHeight="65.0" prefWidth="234.0" spacing="15.0" />
+                  <Line endX="-5.0" endY="376.0" layoutX="450.0" layoutY="22.0" opacity="0.3" startX="-5.0" stroke="WHITE" />
+                  <Line endX="424.0" endY="181.0" layoutX="460.0" layoutY="39.0" opacity="0.5" startX="-438.0" startY="181.0" stroke="WHITE" />
+                  <Label alignment="TOP_LEFT" layoutX="465.0" layoutY="60.0" prefHeight="62.0" prefWidth="370.0" text="Com está opção ativada o Mark triará apenas na Peticição Inicial do processo aberto." textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="465.0" layoutY="30.0" text="Petição Inicial" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="470.0" layoutY="128.0" prefHeight="65.0" prefWidth="150.0" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="desativadoPeticaoInicial" mnemonicParsing="false" selected="true" text="Desativado" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="grupoPericial1" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="ativadoPeticaoInicial" mnemonicParsing="false" text="Ativado" textFill="WHITE" toggleGroup="$grupoPericial1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <Label layoutX="40.0" layoutY="236.0" text="Concatenação de etiqueta" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="TOP_LEFT" layoutX="40.0" layoutY="271.0" prefHeight="62.0" prefWidth="370.0" text="Com está opção ativada o Mark incrementará o conteúdo da etiqueta do Sapiens ao invéis de sobreescrevê-lo" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="40.0" layoutY="325.0" prefHeight="65.0" prefWidth="150.0" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="desativadoConcatenacao" mnemonicParsing="false" selected="true" text="Desativado" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="grupoPericial11" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="ativadoConcatenacao" mnemonicParsing="false" text="Ativado" textFill="WHITE" toggleGroup="$grupoPericial11">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </content>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="FLAG" />
+         </graphic>
+      </Tab>
+      <Tab text="Contador">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="618.0">
+               <children>
+                  <Label layoutX="40.0" layoutY="60.0" text="Monitora o número de processos etiquetados pelo Mark." textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="40.0" layoutY="30.0" text="Contador" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="voltarContador" layoutX="730.0" layoutY="390.0" onAction="#RetornaMenu" prefHeight="25.0" prefWidth="122.0" ripplerFill="#1e1e1e08" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Voltar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXButton>
+                  <Label layoutX="50.0" layoutY="140.0" text="Número total de processos etiquetados:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="50.0" layoutY="170.0" text="Número total de processos etiquetados como &quot;Não localizado&quot;:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="50.0" layoutY="230.0" text="Número total de processos etiquetados na MOVIMENTAÇÃO:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="50.0" layoutY="200.0" text="Número total de processos etiquetados no DOCUMENTO:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="contTotal" accessibleRole="TEXT_AREA" editable="false" focusColor="#405aa800" focusTraversable="false" layoutX="319.0" layoutY="135.0" prefHeight="5.0" prefWidth="100.0" styleClass="areaSaida" stylesheets="@../styles/dark_theme.css" unFocusColor="#4d4d4d00">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></JFXTextField>
+                  <JFXTextField fx:id="contNao" editable="false" focusColor="#ffffff00" focusTraversable="false" layoutX="474.0" layoutY="165.0" prefHeight="5.0" prefWidth="100.0" styleClass="areaSaida" stylesheets="@../styles/dark_theme.css" unFocusColor="#4d4d4d00">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></JFXTextField>
+                  <JFXTextField fx:id="contDoc" editable="false" focusColor="#415aa600" focusTraversable="false" layoutX="436.0" layoutY="195.0" prefHeight="5.0" prefWidth="100.0" styleClass="areaSaida" stylesheets="@../styles/dark_theme.css" unFocusColor="#4d4d4d00">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></JFXTextField>
+                  <JFXTextField fx:id="contSeq" editable="false" focusColor="#405aa800" focusTraversable="false" layoutX="461.0" layoutY="225.0" prefHeight="30.0" prefWidth="100.0" styleClass="areaSaida" stylesheets="@../styles/dark_theme.css" unFocusColor="#4d4d4d00">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></JFXTextField>
+               </children></AnchorPane>
+        </content>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" iconName="FLAG" />
+         </graphic>
+      </Tab>
+   </tabs>
+</JFXTabPane>
