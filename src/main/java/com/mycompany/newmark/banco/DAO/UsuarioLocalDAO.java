@@ -1,4 +1,4 @@
-package com.mycompany.newmark.DAO;
+package com.mycompany.newmark.banco.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mycompany.newmark.Aviso;
-import com.mycompany.newmark.connectionFactory.ConnectionFactory;
-import com.mycompany.newmark.entities.UsuarioLocal;
+import com.mycompany.newmark.controllers.ControllerAviso;
+import com.mycompany.newmark.banco.ConnectionFactory;
+import com.mycompany.newmark.models.UsuarioLocal;
 
 public class UsuarioLocalDAO  {
+
+	ControllerAviso controllerAviso = new ControllerAviso();
 
 	public List<UsuarioLocal> getTabelaUsuarios() {
 		final String SQL = "SELECT * FROM usuarios";
@@ -21,7 +23,7 @@ public class UsuarioLocalDAO  {
 				usuarios.add(new UsuarioLocal(rs.getString("nome"), rs.getString("senha")));
 			}
 		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage());
+			controllerAviso.exibir(e.getMessage());
 		}
 		return usuarios;
 	}
@@ -34,9 +36,9 @@ public class UsuarioLocalDAO  {
 			stmt.setString(2, senha);
 			stmt.setString(3, antigoNome);
 			stmt.execute();
-			new Aviso().aviso("Usuário atualizado");
+			controllerAviso.exibir("Usuário atualizado");
 		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage());
+			controllerAviso.exibir(e.getMessage());
 		}
 		
 	}
@@ -55,7 +57,7 @@ public class UsuarioLocalDAO  {
 				}
 			}
 		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage());
+			controllerAviso.exibir(e.getMessage());
 		}
 		return resultado;
 	}

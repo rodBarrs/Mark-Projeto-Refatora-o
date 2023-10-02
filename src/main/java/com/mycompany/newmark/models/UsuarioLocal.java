@@ -1,4 +1,4 @@
-package com.mycompany.newmark.entities;
+package com.mycompany.newmark.models;
 
 public class UsuarioLocal {
 	private static Boolean estaLogado = false;

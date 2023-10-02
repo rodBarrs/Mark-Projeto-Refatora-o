@@ -4,6 +4,8 @@
  */
 package com.mycompany.newmark;
 
+import com.mycompany.newmark.banco.Banco;
+import com.mycompany.newmark.controllers.ControllerAviso;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,20 +18,20 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             // Carrega o layout FXML
-            Pane root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+            Pane root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
             // Cria a cena
             Scene scene = new Scene(root);
             // Define parâmetros para a janela
             primaryStage.setMinWidth(900);
             primaryStage.setMinHeight(500);
-            primaryStage.getIcons().add(new Image("/fxml/Imagens/iconeMark.png"));
+            primaryStage.getIcons().add(new Image("/view/Imagens/iconeMark.png"));
             primaryStage.setTitle("Sistema de Triagem Mark");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
         } catch (Exception erro) {
-            Aviso aviso = new Aviso();
-            aviso.aviso(erro.getMessage());
+            ControllerAviso controllerAviso = new ControllerAviso();
+            controllerAviso.exibir(erro.getMessage());
             erro.printStackTrace();
         }
     }

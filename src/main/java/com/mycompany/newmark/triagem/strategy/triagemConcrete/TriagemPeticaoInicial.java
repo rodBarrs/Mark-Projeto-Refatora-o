@@ -1,11 +1,14 @@
-package com.mycompany.newmark.triagem.strategy;
+package com.mycompany.newmark.triagem.strategy.triagemConcrete;
 
-import com.mycompany.newmark.Tratamento;
-import com.mycompany.newmark.models.Chaves_Configuracao;
-import com.mycompany.newmark.models.Chaves_Resultado;
-import com.mycompany.newmark.pdf.LeituraPDF;
-import com.mycompany.newmark.triagem.Triagem_Condicao;
-import com.mycompany.newmark.triagem.Triagem_Etiquetas;
+import com.mycompany.newmark.auxiliares.Tratamento;
+import com.mycompany.newmark.models.ChavesConfiguracao;
+import com.mycompany.newmark.models.ChavesResultado;
+import com.mycompany.newmark.auxiliares.pdf.LeituraPDF;
+import com.mycompany.newmark.banco.BuscarCondicaoBanco;
+import com.mycompany.newmark.banco.BuscarEtiquetaBanco;
+import com.mycompany.newmark.triagem.strategy.triagemAbstract.TriagemStrategy;
+import com.mycompany.newmark.triagem.triagemAuxiliares.TriagemAuxilioGeral;
+import com.mycompany.newmark.triagem.triagemAuxiliares.TriagemCopiarConteudo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -17,64 +20,28 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TriagemPeticaoInicial implements TriagemStrategy{
+public class TriagemPeticaoInicial implements TriagemStrategy {
     private String localTriagem = "PET";
     TriagemStrategy triagemStrategy = null;
+    TriagemAuxilioGeral geral = new TriagemAuxilioGeral();
+
     @Override
-    public Chaves_Resultado realizarTriagem(WebDriver driver, WebDriverWait wait, Chaves_Configuracao configuracao, String bancos) throws Exception {
+    public ChavesResultado realizarTriagem(WebDriver driver, WebDriverWait wait, ChavesConfiguracao configuracao, String bancos) throws Exception {
         Tratamento tratamento = new Tratamento();
-        Triagem_Condicao cond = new Triagem_Condicao();
-        Chaves_Resultado resultado = new Chaves_Resultado();
+        BuscarCondicaoBanco cond = new BuscarCondicaoBanco();
+        ChavesResultado resultado = new ChavesResultado();
         LeituraPDF pdf = new LeituraPDF();
         Actions action = new Actions(driver);
         String documentoPeticaoInicial = "";
-
-
-
-        // Limpa conteúdo estáticos da Chaves_Resultado
-        Chaves_Resultado.setSeqPeticao("");
-        Chaves_Resultado.setPalavraChavePeticao("");
-
-        // Aguarda até que tabela com as movimentações (treeview) esteja carregada
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("treeview-1015")));
-
-        // Armazena todas as movimentações num ArrayList
-        WebElement TabelaTref = driver.findElement(By.id("treeview-1015"));
-        List<WebElement> listaMovimentacao = new ArrayList<WebElement>(TabelaTref.findElements(By.cssSelector("tr")));
-
-        // Aguarda até que o iframe esteja carregado e então envia o Driver para o
-        // iframe (para que possa interagir com o interior do iframe)
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("iframe-myiframe")));
-        WebElement capa = driver.findElement(By.id("iframe-myiframe"));
-        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(capa));
-        do {
-            try {
-                wait.until(ExpectedConditions.elementToBeClickable(By.tagName("html")));
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
-                driver.findElement(By.tagName("html")).click();
-                break;
-            } catch (Exception e) {
-                //
-            }
-        } while (true);
-        // Aguarda até que o campo "órgão julgador" esteja carregado e então salva seu
-        // conteúdo
-
         String orgaoJulgador = "";
-        int x = 4;
-        try {
-            wait.until(ExpectedConditions
-                    .presenceOfElementLocated(By.xpath("/html/body/div/div[" + x + "]/table/tbody/tr[3]/td[2]")));
-            orgaoJulgador = orgaoNaDiv(x, driver);
-        } catch (Exception e) {
-            orgaoJulgador = orgaoNaDiv(x + 1, driver);
-        }
+        TriagemCopiarConteudo triagemCopiarConteudo = new TriagemCopiarConteudo();
+
+        List<WebElement> listaMovimentacao = carregarPage(driver, wait);
+
+        orgaoJulgador = carregarOrgaoNaDiv(driver, wait);
 
         // Devolve o driver para a página
         driver.switchTo().defaultContent();
@@ -194,10 +161,10 @@ public class TriagemPeticaoInicial implements TriagemStrategy{
                                     String processo = pdf.lerPDF().toUpperCase();
                                     if (cond.verificaCondicao(processo, "PET",bancos)) {
                                         String posicaoDaPeticao = String.valueOf(j - 1);
-                                        Chaves_Resultado.setSeqPeticao("(" + posicaoDaPeticao + ")");
+                                        ChavesResultado.setSeqPeticao("(" + posicaoDaPeticao + ")");
 
 
-                                        resultado = verificarNucleo(processo, orgaoJulgador, bancos);
+                                        resultado = verificarNucleo(processo, orgaoJulgador, resultado, configuracao, bancos);
                                         System.out.println("Retorno 1 - " + resultado.getSubnucleo());
 
 
@@ -230,62 +197,86 @@ public class TriagemPeticaoInicial implements TriagemStrategy{
                             } while (flag);
 
                             driver.switchTo().defaultContent();
-
-                            Thread.sleep(500);
-                            action.keyDown(Keys.CONTROL).sendKeys(String.valueOf('\u0061')).perform();
-                            action.keyDown(Keys.CONTROL).sendKeys(String.valueOf('\u0063')).perform();
-                            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                            DataFlavor flavor = DataFlavor.stringFlavor;
-                            Thread.sleep(500);
-                            String processo = clipboard.getData(flavor).toString().toUpperCase();
+                            String processo = geral.copiarConteudo(driver);
                             processo = tratamento.tratamento(processo);
-
                             contemPeticaoInicial = cond.verificaCondicao(processo, "PET", bancos);
                             if (contemPeticaoInicial) {
                                 String posicaoDaPeticao = String.valueOf(j - 1);
-                                Chaves_Resultado.setSeqPeticao("(" + posicaoDaPeticao + ")");
-
-
-                                resultado = verificarNucleo(processo, orgaoJulgador, bancos);
-                                System.out.println("Retorno 2 - " + resultado.getSubnucleo());
-
-
+                                ChavesResultado.setSeqPeticao("(" + posicaoDaPeticao + ")");
+                                resultado = verificarNucleo(processo, orgaoJulgador,resultado,configuracao, bancos);
                                 String nucleo = resultado.getEtiqueta();
-                                //		 resultado = triagemPadrao(driver, wait, config, banco, i, true, nucleo);
                                 resultado.setDriver(driver);
                                 return resultado;
                             }
                         }
                     }
 
-                    Chaves_Resultado.setSeqPeticao("PETIÇÃO NÃO ENCONTRADA");
+                    ChavesResultado.setSeqPeticao("PETIÇÃO NÃO ENCONTRADA");
                     // resultado = triagemPadrao(driver, wait, config, banco, i, true, "");
                     resultado.setDriver(driver);
                     return resultado;
 
                 } else {
                     String posicaoDaPeticao = String.valueOf(i - 1);
-                    Chaves_Resultado.setSeqPeticao("(" + posicaoDaPeticao + ")");
-
-
-                    resultado = verificarNucleo(documentoPeticaoInicial, orgaoJulgador, bancos);
-                    System.out.println("Retorno 3 - " + resultado.getSubnucleo());
-
-
-                    System.out.println("");
-                    // resultado = triagemPadrao(driver, wait, config, banco, i, false,
-                    // resultado.getEtiqueta());
+                    ChavesResultado.setSeqPeticao("(" + posicaoDaPeticao + ")");
+                    resultado = verificarNucleo(documentoPeticaoInicial, orgaoJulgador, resultado, configuracao, bancos);
                     resultado.setDriver(driver);
                     return resultado;
                 }
 
             }
         }
-        Chaves_Resultado.setSeqPeticao("PETIÇÃO NÃO ENCONTRADA");
-        //resultado = triagemPadrao(driver, wait, config, banco, 0, false, "");
+        ChavesResultado.setSeqPeticao("PETIÇÃO NÃO ENCONTRADA");
         resultado.setDriver(driver);
         return resultado;
 
+    }
+
+    private String carregarOrgaoNaDiv(WebDriver driver, WebDriverWait wait) throws Exception {
+        String orgaoJulgador;
+        int x = 4;
+        try {
+            wait.until(ExpectedConditions
+                    .presenceOfElementLocated(By.xpath("/html/body/div/div[" + x + "]/table/tbody/tr[3]/td[2]")));
+            orgaoJulgador = orgaoNaDiv(x, driver);
+        } catch (Exception e) {
+            orgaoJulgador = orgaoNaDiv(x + 1, driver);
+        }
+        return orgaoJulgador;
+    }
+
+    private static List<WebElement> carregarPage(WebDriver driver, WebDriverWait wait) {
+        // Limpa conteúdo estáticos da Chaves_Resultado
+        ChavesResultado.setSeqPeticao("");
+        ChavesResultado.setPalavraChavePeticao("");
+
+        // Aguarda até que tabela com as movimentações (treeview) esteja carregada
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("treeview-1015")));
+
+        // Armazena todas as movimentações num ArrayList
+        WebElement TabelaTref = driver.findElement(By.id("treeview-1015"));
+        List<WebElement> listaMovimentacao = new ArrayList<WebElement>(TabelaTref.findElements(By.cssSelector("tr")));
+
+        // Aguarda até que o iframe esteja carregado e então envia o Driver para o
+        // iframe (para que possa interagir com o interior do iframe)
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("iframe-myiframe")));
+        WebElement capa = driver.findElement(By.id("iframe-myiframe"));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(capa));
+
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(By.tagName("html")));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+            driver.findElement(By.tagName("html")).click();
+        } catch (Exception e) {
+            // Lidar com a exceção, se necessário
+        }
+
+// Aguarda até que o campo "órgão julgador" esteja carregado e então salva seu conteúdo
+        wait.until(ExpectedConditions.elementToBeClickable(By.tagName("html")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+        driver.findElement(By.tagName("html")).click();
+
+        return listaMovimentacao;
     }
 
     private String orgaoNaDiv(int x, WebDriver driver) throws Exception {
@@ -304,58 +295,46 @@ public class TriagemPeticaoInicial implements TriagemStrategy{
         }
     }
 
-    private Chaves_Resultado verificarNucleo(String processo, String orgaoJulgador, String banco) {
-        Triagem_Etiquetas triagem = new Triagem_Etiquetas();
+    private ChavesResultado verificarNucleo(String processo, String orgaoJulgador, ChavesResultado resultado, ChavesConfiguracao configuracao, String banco) {
+        BuscarEtiquetaBanco triagem = new BuscarEtiquetaBanco();
         // Identifica a matéria e salva na variável resultado
 
-        Chaves_Resultado resultado = triagem.triarBanco(processo, banco, localTriagem, "PETIÇÃO INCIAL", true);
-        Chaves_Resultado.setPalavraChavePeticao(resultado.getPalavraChave());
+        resultado = triagem.triarBanco(processo, banco, resultado, configuracao);
+        ChavesResultado.setPalavraChavePeticao(resultado.getPalavraChave());
 
-        String nucleo = resultado.getSubnucleo();
-
-
-        // Valida Subnúcleo
-        Boolean SSEASValido = resultado.getSubnucleo().contains("ER-SEAS")
-                && (orgaoJulgador.contains("JUIZADO ESPECIAL") || orgaoJulgador.contains("VARA FEDERAL")
-                || orgaoJulgador.contains("JEF"));
-        Boolean SBIValido = resultado.getSubnucleo().toUpperCase().contains("ETR-BI") && (orgaoJulgador.toUpperCase().contains("JUIZADO ESPECIAL"));
-        Boolean TRUValido = orgaoJulgador.toUpperCase().contains("FEDERAL");
-        /// NÃO SE SABE SE O CORRETO É O ORGAO OU O SUBNUCLEO
+        Boolean SSEASValido = validarSSEAS(resultado.getSubnucleo(), orgaoJulgador);
+        Boolean SBIValido = validarSBI(resultado.getSubnucleo(), orgaoJulgador);
+        Boolean TRUValido = validarTRU(orgaoJulgador);
         Boolean naoFoiPossivel = resultado.getEtiqueta().toUpperCase().contains("NÃO FOI POSSÍVEL");
 
-        System.out.println("Subnúcleo - " + resultado.getSubnucleo());
-        System.out.println("Órgão Julgador - " + orgaoJulgador);
-
-        System.out.println("-----------------------------------------");
-
-        System.out.println("SSEASValido - " + SSEASValido);
-        System.out.println("SBISValido - " + SBIValido);
-        System.out.println("TRUValido - " + TRUValido);
-        System.out.println("Não foi possível - " + naoFoiPossivel);
-
-        System.out.println("-----------------------------------------");
-
         if (naoFoiPossivel) {
-            System.out.println("Entrou na condição 0!");
             return resultado;
         } else if (SSEASValido || SBIValido) {
-            System.out.println("Entrou na condição 1!");
-            System.out.println("Subnúcleo colocado - " + resultado.getSubnucleo());
             atualizarEtiqueta(resultado);
             return resultado;
         } else if (TRUValido) {
-            System.out.println("Entrou na condição 2");
             resultado.setSubnucleo("ER-TRU");
             atualizarEtiqueta(resultado);
             return resultado;
         }
-        System.out.println("Entrou na condição 3");
         resultado.setSubnucleo("PREV/LOCAL");
         atualizarEtiqueta(resultado);
         return resultado;
     }
 
-    private void atualizarEtiqueta(Chaves_Resultado resultado) {
+    private Boolean validarSSEAS(String subnucleo, String orgaoJulgador) {
+        return subnucleo.contains("ER-SEAS") && (orgaoJulgador.contains("JUIZADO ESPECIAL") || orgaoJulgador.contains("VARA FEDERAL") || orgaoJulgador.contains("JEF"));
+    }
+
+    private Boolean validarSBI(String subnucleo, String orgaoJulgador) {
+        return subnucleo.toUpperCase().contains("ETR-BI") && orgaoJulgador.toUpperCase().contains("JUIZADO ESPECIAL");
+    }
+
+    private Boolean validarTRU(String orgaoJulgador) {
+        return orgaoJulgador.toUpperCase().contains("FEDERAL");
+    }
+
+    private void atualizarEtiqueta(ChavesResultado resultado) {
         if (resultado.getEtiqueta().isEmpty()) {
             resultado.setEtiqueta(resultado.getSubnucleo());
         } else {
@@ -364,65 +343,5 @@ public class TriagemPeticaoInicial implements TriagemStrategy{
         System.out.println("Subnúcleo colocado - " + resultado.getSubnucleo());
     }
 
-    public Chaves_Resultado triagemPadrao(WebDriver driver,
-                                          WebDriverWait wait, Chaves_Configuracao configs, String banco, int
-                                                  indexPeticao, boolean dentroDaPasta, String nucleo) throws
-            InterruptedException, SQLException, UnsupportedFlavorException, IOException {
-
-
-        System.out.println("-------------------------------------------------");
-        System.out.println("INICIO");
-        Chaves_Resultado resultado = new Chaves_Resultado();
-        resultado.setSubnucleo("");
-        if (dentroDaPasta) {
-            System.out.println("AVISANDO DENTRO DA PASTA");
-            try {
-                System.out.println("TRY DENTRO DA PASTA");
-                driver.findElement(By.xpath("//tr[" + indexPeticao + "]/td/div/img")).click();
-            } catch (Exception e) {
-                System.out.println("CATCH DENTRO DA PASTA");
-                //
-            }
-        }
-
-        // Clica na capa
-
-        driver.findElement(By.xpath("//tr[1]/td/div/img")).click();
-        System.out.println("CLICOU NA PASTA");
-
-        switch (configs.getTipoTriagem()) {
-            case "COM":
-                triagemStrategy = new TriagemMovimentacao();
-                if (resultado.getEtiqueta().contains("NÃO FOI POSSÍVEL LOCALIZAR FRASE CHAVE ATUALIZADA")) {
-                    triagemStrategy = new TriagemDocumento();
-                }
-                break;
-            case "MOV":
-                triagemStrategy = new TriagemMovimentacao();
-                break;
-            case "DOC":
-                triagemStrategy = new TriagemDocumento();
-                ;
-                break;
-        }
-
-
-        String etiqueta = resultado.getEtiqueta().toUpperCase().replaceAll("-", "").replaceAll(" ", "");
-
-        if (etiqueta.contains("PJEFEDERAL") || etiqueta.contains("PJEPAR") || etiqueta.contains("PJEESTADUAL")) {
-            resultado.setDriver(driver);
-            resultado.setEtiqueta(resultado.getEtiqueta());
-            return resultado;
-        }
-
-        String etiquetaFinal = resultado.getEtiqueta();
-        System.out.println("etiqueta Final " + etiquetaFinal);
-        resultado.setEtiqueta(etiquetaFinal);
-        resultado.setDriver(driver);
-
-        resultado.setEtiqueta(resultado.getEtiqueta());
-        return resultado;
-
-    }
 }
 

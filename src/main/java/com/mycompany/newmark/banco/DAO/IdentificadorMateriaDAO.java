@@ -1,4 +1,4 @@
-package com.mycompany.newmark.DAO;
+package com.mycompany.newmark.banco.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,35 +9,26 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.mycompany.newmark.Aviso;
+import com.mycompany.newmark.controllers.ControllerAviso;
 import com.mycompany.newmark.banco.Banco;
-import com.mycompany.newmark.models.Chaves_Banco;
-import com.mycompany.newmark.connectionFactory.ConnectionFactory;
+import com.mycompany.newmark.models.ChavesBanco;
+import com.mycompany.newmark.banco.ConnectionFactory;
 
 public class IdentificadorMateriaDAO {
+	ControllerAviso controllerAviso = new ControllerAviso();
 
-	public List<Chaves_Banco> getTabelaIdentificadorMateria() {
-		
+	public List<ChavesBanco> getTabelaIdentificadorMateria() {
+		List<ChavesBanco> identificadoresMateria = new ArrayList<>();
 		final String SQL = "SELECT * FROM identificador_materia ORDER BY id";
-		List<Chaves_Banco> identificadoresMateria = new ArrayList<>();
+
 		try (Connection connection = new ConnectionFactory().obterConexao();
 				PreparedStatement stmt = connection.prepareStatement(SQL)) {
 			ResultSet resultSet = stmt.executeQuery();
-			while (resultSet.next()) {
-				Chaves_Banco key = new Chaves_Banco();
-				key.setID(resultSet.getInt("id"));
-				key.setPALAVRACHAVE(resultSet.getString("palavrachave"));
-				key.setCOMPLEMENTO(resultSet.getString("complemento"));
-				key.setSubnucleo(resultSet.getString("subnucleo"));
-				key.setETIQUETA(resultSet.getString("etiqueta"));
-				key.setPRIORIDADE(resultSet.getString("prioridade"));
-				identificadoresMateria.add(key);
-			}
+			identificadoresMateria = extrairChaveIdentificadorMateria(resultSet);
 		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage() + "aaaaaa");
+			controllerAviso.exibir(e.getMessage() + "aaaaaa");
 		} 
 
-		
 		return identificadoresMateria;
 	}
 
@@ -56,15 +47,15 @@ public class IdentificadorMateriaDAO {
 
 			stmt.execute();
 
-			new Aviso().aviso("Etiqueta inserida com sucesso!");
+			controllerAviso.exibir("Etiqueta inserida com sucesso!");
 
 		} catch (SQLException erro) {
 			if (erro.getMessage().contains("UNIQUE constraint")) {
-				new Aviso().aviso("Não foi possível inserir o registro:\n" + "O registro já esta cadastrado!");
+				controllerAviso.exibir("Não foi possível inserir o registro:\n" + "O registro já esta cadastrado!");
 				erro.printStackTrace();
 			} else {
 				Logger.getLogger(Banco.class.getName()).log(Level.SEVERE, null, erro);
-				new Aviso().aviso(erro.getMessage());
+				controllerAviso.exibir(erro.getMessage());
 			}
 		}
 	}
@@ -75,16 +66,16 @@ public class IdentificadorMateriaDAO {
 				PreparedStatement stmt = connection.prepareStatement(SQL)) {
 			stmt.setInt(1, idSelecionado);
 			stmt.executeUpdate();
-			new Aviso().aviso("Item removido");
+			controllerAviso.exibir("Item removido");
 		} catch (Exception e) {
-			new Aviso().aviso("Item não removido\n" + e.getMessage());
+			controllerAviso.exibir("Item não removido\n" + e.getMessage());
 		}
 
 	}
 
-	public List<Chaves_Banco> buscaIdentificadorPorID(String id) {
+	public List<ChavesBanco> buscaIdentificadorPorID(String id) {
 
-		List<Chaves_Banco> chaves = new ArrayList<>();
+		List<ChavesBanco> chaves = new ArrayList<>();
 
 		final String SQL = "SELECT * FROM identificador_materia WHERE id = ?";
 
@@ -92,28 +83,19 @@ public class IdentificadorMateriaDAO {
 				PreparedStatement stmt = connection.prepareStatement(SQL)) {
 			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Chaves_Banco chave = new Chaves_Banco();
-				chave.setID(Integer.valueOf(rs.getString("id")));
-				chave.setPALAVRACHAVE(rs.getString("palavrachave"));
-				chave.setCOMPLEMENTO(rs.getString("complemento"));
-				chave.setETIQUETA(rs.getString("etiqueta"));
-				chave.setSubnucleo(rs.getString("subnucleo"));
-				chave.setPRIORIDADE(rs.getString("prioridade"));
-				chaves.add(chave);
-			}
+			chaves = extrairChaveIdentificadorMateria(rs);
 		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage());
+			controllerAviso.exibir(e.getMessage());
 		}
 
 		return chaves;
 
 	}
 
-	public List<Chaves_Banco> buscaIdentificador(String textoBusca) {
+	public List<ChavesBanco> buscaIdentificador(String textoBusca) {
 		final String SQL = "SELECT * FROM identificador_materia WHERE palavrachave LIKE ? OR complemento LIKE ? OR etiqueta LIKE ?";
 		
-		List<Chaves_Banco> chaves = new ArrayList<>();
+		List<ChavesBanco> chaves = new ArrayList<>();
 		
 		try (Connection connection = new ConnectionFactory().obterConexao();
 				PreparedStatement stmt = connection.prepareStatement(SQL)){
@@ -121,18 +103,9 @@ public class IdentificadorMateriaDAO {
 				stmt.setString(2, '%' + textoBusca + '%');
 				stmt.setString(3, '%' + textoBusca + '%');
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				Chaves_Banco chave = new Chaves_Banco();
-				chave.setID(Integer.valueOf(rs.getString("id")));
-				chave.setPALAVRACHAVE(rs.getString("palavrachave"));
-				chave.setCOMPLEMENTO(rs.getString("complemento"));
-				chave.setETIQUETA(rs.getString("etiqueta"));
-				chave.setSubnucleo(rs.getString("subnucleo"));
-				chave.setPRIORIDADE(rs.getString("prioridade"));
-				chaves.add(chave);
-			}
+			chaves = extrairChaveIdentificadorMateria(rs);
 		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage());
+			controllerAviso.exibir(e.getMessage());
 		}
 		
 		return chaves;
@@ -153,10 +126,26 @@ public class IdentificadorMateriaDAO {
 			stmt.setString(5, prioridade);			
 			stmt.setInt(6, id);
 			stmt.executeUpdate();
-			new Aviso().aviso("Item atualizado");
+			controllerAviso.exibir("Item atualizado");
 		} catch (Exception e) {
-			new Aviso().aviso("Não foi possível atualizar o item\n" + e.getMessage());
+			controllerAviso.exibir("Não foi possível atualizar o item\n" + e.getMessage());
 		}
+	}
+
+	private List<ChavesBanco> extrairChaveIdentificadorMateria(ResultSet resultSet) throws SQLException {
+		List<ChavesBanco> identificadoresMateria = null;
+		while (resultSet.next()) {
+			identificadoresMateria = new ArrayList<>();
+			ChavesBanco chave = new ChavesBanco();
+			chave.setID(resultSet.getInt("id"));
+			chave.setPALAVRACHAVE(resultSet.getString("palavrachave"));
+			chave.setCOMPLEMENTO(resultSet.getString("complemento"));
+			chave.setSubnucleo(resultSet.getString("subnucleo"));
+			chave.setETIQUETA(resultSet.getString("etiqueta"));
+			chave.setPRIORIDADE(resultSet.getString("prioridade"));
+			identificadoresMateria.add(chave);
+		}
+		return identificadoresMateria;
 	}
 
 }

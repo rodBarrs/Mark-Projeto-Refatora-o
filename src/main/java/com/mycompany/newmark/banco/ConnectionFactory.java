@@ -1,10 +1,10 @@
-package com.mycompany.newmark.connectionFactory;
+package com.mycompany.newmark.banco;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConnectionFactory {
-	
+
 	private final String URL = "jdbc:sqlite:BancoEtiquetasMark.db";
 
 	public Connection obterConexao() {

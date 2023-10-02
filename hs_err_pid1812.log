@@ -1,0 +1,162 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1048576 bytes for AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (memory/allocation.inline.hpp:61), pid=1812, tid=0x0000000000001a74
+#
+# JRE version:  (8.0_372-b07) (build )
+# Java VM: OpenJDK 64-Bit Server VM (25.372-b07 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000002bb92778800):  JavaThread "Unknown thread" [_thread_in_vm, id=6772, stack(0x000000ffd3e00000,0x000000ffd3f00000)]
+
+Stack: [0x000000ffd3e00000,0x000000ffd3f00000]
+[error occurred during error reporting (printing stack bounds), id 0xc0000005]
+
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x000002bb92778800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=6772, stack(0x000000ffd3e00000,0x000000ffd3f00000)]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+heap address: 0x0000000081200000, size: 2030 MB, Compressed Oops mode: 32-bit
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 3
+Compressed class space size: 1073741824 Address: 0x0000000100000000
+
+Heap:
+ PSYoungGen      total 38400K, used 665K [0x00000000d5b80000, 0x00000000d8600000, 0x0000000100000000)
+  eden space 33280K, 2% used [0x00000000d5b80000,0x00000000d5c26670,0x00000000d7c00000)
+  from space 5120K, 0% used [0x00000000d8100000,0x00000000d8100000,0x00000000d8600000)
+  to   space 5120K, 0% used [0x00000000d7c00000,0x00000000d7c00000,0x00000000d8100000)
+ ParOldGen       total 87552K, used 0K [0x0000000081200000, 0x0000000086780000, 0x00000000d5b80000)
+  object space 87552K, 0% used [0x0000000081200000,0x0000000081200000,0x0000000086780000)
+ Metaspace       used 779K, capacity 4480K, committed 4480K, reserved 1056768K
+  class space    used 76K, capacity 384K, committed 384K, reserved 1048576K
+
+Card table byte_map: [0x000002bba3500000,0x000002bba3900000] byte_map_base: 0x000002bba30f7000
+
+Marking Bits: (ParMarkBitMap*) 0x0000000076676850
+ Begin Bits: [0x000002bba3bb0000, 0x000002bba5b68000)
+ End Bits:   [0x000002bba5b68000, 0x000002bba7b20000)
+
+Polling page: 0x000002bb92910000
+
+CodeCache: size=245760Kb used=328Kb max_used=328Kb free=245431Kb
+ bounds [0x000002bb94140000, 0x000002bb943b0000, 0x000002bba3140000]
+ total_blobs=57 nmethods=0 adapters=38
+ compilation: enabled
+
+Compilation events (0 events):
+No events
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 0.024 loading class java/lang/Short
+Event: 0.024 loading class java/lang/Short done
+Event: 0.024 loading class java/lang/Integer
+Event: 0.024 loading class java/lang/Integer done
+Event: 0.024 loading class java/lang/Long
+Event: 0.024 loading class java/lang/Long done
+Event: 0.025 loading class java/lang/NullPointerException
+Event: 0.025 loading class java/lang/NullPointerException done
+Event: 0.025 loading class java/lang/ArithmeticException
+Event: 0.025 loading class java/lang/ArithmeticException done
+
+
+Dynamic libraries:
+0x00007ff7ae110000 - 0x00007ff7ae14a000 	C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\bin\java.exe
+0x00007ff8e1db0000 - 0x00007ff8e1fc4000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ff8e0230000 - 0x00007ff8e02f4000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ff8df330000 - 0x00007ff8df6d4000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ff8e0300000 - 0x00007ff8e03b0000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ff8e0fe0000 - 0x00007ff8e1087000 	C:\Windows\System32\msvcrt.dll
+0x00007ff8e1340000 - 0x00007ff8e13e6000 	C:\Windows\System32\sechost.dll
+0x00007ff8e15a0000 - 0x00007ff8e16b7000 	C:\Windows\System32\RPCRT4.dll
+0x00007ff8dfc50000 - 0x00007ff8dfdfa000 	C:\Windows\System32\USER32.dll
+0x00007ff8df300000 - 0x00007ff8df326000 	C:\Windows\System32\win32u.dll
+0x00007ff8e16c0000 - 0x00007ff8e16e9000 	C:\Windows\System32\GDI32.dll
+0x00007ff8df7d0000 - 0x00007ff8df8e9000 	C:\Windows\System32\gdi32full.dll
+0x00007ff8dfad0000 - 0x00007ff8dfb6a000 	C:\Windows\System32\msvcp_win.dll
+0x00007ff8df8f0000 - 0x00007ff8dfa01000 	C:\Windows\System32\ucrtbase.dll
+0x00007ff8c61d0000 - 0x00007ff8c645f000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.2070_none_2713e6537381f706\COMCTL32.dll
+0x00007ff8e1460000 - 0x00007ff8e1491000 	C:\Windows\System32\IMM32.DLL
+0x00007ff8b3940000 - 0x00007ff8b3a2f000 	C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\bin\msvcr120.dll
+0x00007ff8b3890000 - 0x00007ff8b3936000 	C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\bin\msvcp120.dll
+0x0000000075e80000 - 0x00000000766f5000 	C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\bin\server\jvm.dll
+0x00007ff8e1850000 - 0x00007ff8e1858000 	C:\Windows\System32\PSAPI.DLL
+0x00007ff8cdfb0000 - 0x00007ff8cdfb9000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x00007ff8d6c50000 - 0x00007ff8d6c84000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ff8d70e0000 - 0x00007ff8d70ea000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ff8dfbb0000 - 0x00007ff8dfc21000 	C:\Windows\System32\WS2_32.dll
+0x00007ff8ce550000 - 0x00007ff8ce55f000 	C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\bin\verify.dll
+0x00007ff8b7fc0000 - 0x00007ff8b7fe9000 	C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\bin\java.dll
+0x00007ff8d2650000 - 0x00007ff8d267a000 	C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\bin\instrument.dll
+0x00007ff8b8580000 - 0x00007ff8b8596000 	C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.1.1\lib\idea_rt.jar=65113:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.1.1\bin -Dfile.encoding=UTF-8 
+java_command: com.mycompany.newmark.Main
+java_class_path (initial): C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\charsets.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\access-bridge-64.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\cldrdata.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\dnsns.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\jaccess.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\jfxrt.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\localedata.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\nashorn.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\sunec.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\sunjce_provider.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\sunmscapi.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\sunpkcs11.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\ext\zipfs.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\jce.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\jfr.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\jfxswt.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\jsse.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\management-agent.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\resources.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\rt.jar;D:\Projetos\Mark-Projeto-Refatora-o\target\classes;C:\Users\Rodrigo\.m2\repository\org\seleniumhq\selenium\selenium-java\3.5.2\selenium-java-3.5.2.jar;C:\Users\Rodrigo\.m2\repository\org\seleniumhq\selenium\selenium-api\3.5.2\selenium-api-3.5.2.jar;C:\Users\Rodrigo\.m2\repository\org\seleniumhq\selenium\selenium-chrome-driver\3.5.2\selenium-chrome-driver-3.5.2.jar;C:\Users\Rodrigo\.m2\repository\org\seleniumhq\selenium\selenium-edge-driver\3.5.2\selenium-edge-driver-3.5.2.jar;C:\Users\Rodrigo\.m2\repository\org\seleniumhq\selenium\selenium-firefox-driver\3.5.2\selenium-firefox-driver-3.5.2.jar;C:\Users\Rodrigo\.m2\repository\org\seleniumhq\selenium\selenium-ie-dr
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Git\cmd;C:\php-8.2.9-nts-Win32-vs16-x64;C:\ProgramData\ComposerSetup\bin;C:\Users\Rodrigo\AppData\Local\Microsoft\WindowsApps;;D:\Microsoft VS Code\bin;C:\Users\Rodrigo\AppData\Roaming\Composer\vendor\bin
+USERNAME=Rodrigo
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 62 Stepping 4, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 11 , 64 bit Build 22621 (10.0.22621.2070)
+
+CPU:total 12 (initial active 12) (6 cores per cpu, 2 threads per core) family 6 model 62 stepping 4, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, erms, ht, tsc, tscinvbit
+
+Memory: 4k page, physical 8307036k(2009812k free), swap 10041208k(5808k free)
+
+vm_info: OpenJDK 64-Bit Server VM (25.372-b07) for windows-amd64 JRE (1.8.0_372-b07), built on Apr 17 2023 22:43:30 by "Administrator" with MS VC++ 12.0 (VS2013)
+
+time: Tue Aug 15 21:01:29 2023
+timezone: Hora oficial do Brasil
+elapsed time: 0.032146 seconds (0d 0h 0m 0s)
+

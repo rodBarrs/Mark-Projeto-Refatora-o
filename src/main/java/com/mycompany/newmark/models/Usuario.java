@@ -3,12 +3,12 @@
  * 
  */
 //Acescentar função de exibir e salvar senha
-package com.mycompany.newmark;
+package com.mycompany.newmark.models;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-class Usuario {
+public class Usuario {
     private String Login = "";
     private String Senha = "";
 

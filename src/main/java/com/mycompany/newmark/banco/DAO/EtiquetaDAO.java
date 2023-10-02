@@ -1,95 +1,72 @@
-package com.mycompany.newmark.DAO;
+package com.mycompany.newmark.banco.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mycompany.newmark.Aviso;
-import com.mycompany.newmark.models.Chaves_Banco;
-import com.mycompany.newmark.connectionFactory.ConnectionFactory;
+import com.mycompany.newmark.controllers.ControllerAviso;
+import com.mycompany.newmark.models.ChavesBanco;
+import com.mycompany.newmark.banco.ConnectionFactory;
 
 public class EtiquetaDAO {
+	ControllerAviso controllerAviso = new ControllerAviso();
 
-	public List<Chaves_Banco> getTabelaEtiqueta(String banco) {
-		final String SQL = "SELECT * FROM etiquetas WHERE banco = '" + banco + "' ORDER BY id";
+	public List<ChavesBanco> getTabelaEtiqueta(String banco) {
+		final String SQL = "SELECT * FROM etiquetas WHERE banco = ? ORDER BY id";
 
-		List<Chaves_Banco> chaves = new ArrayList<>();
+		List<ChavesBanco> chaves = new ArrayList<>();
 
 		try (Connection connection = new ConnectionFactory().obterConexao();
-				PreparedStatement stmt = connection.prepareStatement(SQL)) {
+			 PreparedStatement stmt = connection.prepareStatement(SQL)) {
 
+			stmt.setString(1, banco);
 			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Chaves_Banco chave = new Chaves_Banco();
-				chave.setID(rs.getInt("ID"));
-				chave.setPALAVRACHAVE(rs.getString("palavrachave"));
-				chave.setCOMPLEMENTO(rs.getString("complemento"));
-				chave.setETIQUETA(rs.getString("etiqueta"));
-				chave.setTIPO(rs.getString("tipo"));
-				chave.setPRIORIDADE(rs.getString("prioridade"));
-
-				chaves.add(chave);
-			}
-		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage());
+			chaves = extrairChavesEtiqueta(rs);
+		} catch (SQLException e) {
+			controllerAviso.exibir(e.getMessage());
 		}
 
 		return chaves;
-
 	}
 
-	public List<Chaves_Banco> buscaEtiqueta(String textoEtiqueta) {
+	public List<ChavesBanco> buscaEtiqueta(String textoEtiqueta) {
 		final String SQL = "SELECT * FROM etiquetas WHERE palavrachave LIKE ? OR complemento LIKE ? OR etiqueta LIKE ?";
-		List<Chaves_Banco> chaves = new ArrayList<>();
+		List<ChavesBanco> chaves = new ArrayList<>();
 
 		try (Connection connection = new ConnectionFactory().obterConexao();
-				PreparedStatement stmt = connection.prepareStatement(SQL)) {
-			stmt.setString(1, '%' + textoEtiqueta + '%');
-			stmt.setString(2, '%' + textoEtiqueta + '%');
-			stmt.setString(3, '%' + textoEtiqueta + '%');
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Chaves_Banco chave = new Chaves_Banco();
-				chave.setID(rs.getInt("id"));
-				chave.setPALAVRACHAVE(rs.getString("palavrachave"));
-				chave.setCOMPLEMENTO(rs.getString("complemento"));
-				chave.setETIQUETA(rs.getString("etiqueta"));
-				chave.setTIPO(rs.getString("tipo"));
-				chave.setPRIORIDADE(rs.getString("prioridade"));
+			 PreparedStatement stmt = connection.prepareStatement(SQL)) {
 
-				chaves.add(chave);
-			}
+			String likePattern = '%' + textoEtiqueta + '%';
+			stmt.setString(1, likePattern);
+			stmt.setString(2, likePattern);
+			stmt.setString(3, likePattern);
+
+			ResultSet rs = stmt.executeQuery();
+			chaves = extrairChavesEtiqueta(rs);
+
 		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage());
+			controllerAviso.exibir(e.getMessage());
 		}
 
 		return chaves;
 
 	}
 
-	public List<Chaves_Banco> buscaEtiquetaPorID(String id) {
+	public List<ChavesBanco> buscaEtiquetaPorID(String id) {
 		final String SQL = "SELECT * FROM etiquetas WHERE id = ?";
-		List<Chaves_Banco> chaves = new ArrayList<>();
+		List<ChavesBanco> chaves = new ArrayList<>();
 
 		try (Connection connection = new ConnectionFactory().obterConexao();
-				PreparedStatement stmt = connection.prepareStatement(SQL)) {
+			 PreparedStatement stmt = connection.prepareStatement(SQL)) {
+
 			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Chaves_Banco chave = new Chaves_Banco();
-				chave.setID(rs.getInt("id"));
-				chave.setPALAVRACHAVE(rs.getString("palavrachave"));
-				chave.setCOMPLEMENTO(rs.getString("complemento"));
-				chave.setETIQUETA(rs.getString("etiqueta"));
-				chave.setTIPO(rs.getString("tipo"));
-				chave.setPRIORIDADE(rs.getString("prioridade"));
-
-				chaves.add(chave);
-			}
-		} catch (Exception e) {
-			new Aviso().aviso(e.getMessage());
+			chaves = extrairChavesEtiqueta(rs);
+		}catch (Exception e) {
+			controllerAviso.exibir(e.getMessage());
 		}
 
 		return chaves;
@@ -101,9 +78,9 @@ public class EtiquetaDAO {
 				PreparedStatement stmt = connection.prepareStatement(SQL)) {
 			stmt.setInt(1, id);
 			stmt.executeUpdate();
-			new Aviso().aviso("Item removido");
+			controllerAviso.exibir("Item removido");
 		} catch (Exception e) {
-			new Aviso().aviso("Não foi possível remover o item\n" + e.getMessage());
+			controllerAviso.exibir("Não foi possível remover o item\n" + e.getMessage());
 		}
 
 	}
@@ -121,12 +98,12 @@ public class EtiquetaDAO {
 			stmt.setString(5, peso);
 			stmt.setString(6, banco);
 			stmt.execute();
-			new Aviso().aviso("Item inserido");
+			controllerAviso.exibir("Item inserido");
 		} catch (Exception e) {
 			if (e.getMessage().contains("UNIQUE")) {
-				new Aviso().aviso("Item já existente!");
+				controllerAviso.exibir("Item já existente!");
 			} else {
-				new Aviso().aviso("Item não inserido" + e.getMessage());
+				controllerAviso.exibir("Item não inserido" + e.getMessage());
 			}
 		}
 
@@ -144,11 +121,28 @@ public class EtiquetaDAO {
 			stmt.setString(5, tipo);
 			stmt.setInt(6, id);
 			stmt.execute();
-			new Aviso().aviso("Item atualizado");
+			controllerAviso.exibir("Item atualizado");
 		} catch (Exception e) {
-			new Aviso().aviso("Item não atualizado\n" + e.getMessage());
+			controllerAviso.exibir("Item não atualizado\n" + e.getMessage());
 		}
 
 	}
+
+	private List<ChavesBanco> extrairChavesEtiqueta(ResultSet rs) throws SQLException {
+		List<ChavesBanco> chaves = new ArrayList<>();
+		while (rs.next()) {
+			ChavesBanco chave = new ChavesBanco();
+			chave.setID(rs.getInt("id"));
+			chave.setPALAVRACHAVE(rs.getString("palavrachave"));
+			chave.setCOMPLEMENTO(rs.getString("complemento"));
+			chave.setETIQUETA(rs.getString("etiqueta"));
+			chave.setTIPO(rs.getString("tipo"));
+			chave.setPRIORIDADE(rs.getString("prioridade"));
+
+			chaves.add(chave);
+		}
+		return chaves;
+	}
+
 
 }
