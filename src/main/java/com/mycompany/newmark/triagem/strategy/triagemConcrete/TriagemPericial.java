@@ -1,12 +1,12 @@
 package com.mycompany.newmark.triagem.strategy.triagemConcrete;
 
 import com.mycompany.newmark.auxiliares.Tratamento;
-import com.mycompany.newmark.models.ChavesConfiguracao;
-import com.mycompany.newmark.models.ChavesResultado;
 import com.mycompany.newmark.auxiliares.pdf.LeituraPDF;
 import com.mycompany.newmark.banco.BuscarEtiquetaBanco;
+import com.mycompany.newmark.models.ChavesConfiguracao;
+import com.mycompany.newmark.models.ChavesResultado;
 import com.mycompany.newmark.triagem.strategy.triagemAbstract.TriagemStrategy;
-import com.mycompany.newmark.triagem.triagemAuxiliares.TriagemCopiarConteudo;
+import com.mycompany.newmark.triagem.triagemAuxiliares.TriagemAuxilioGeral;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mycompany.newmark.triagem.strategy.triagemConcrete.TriagemDocumento.geral;
 import static com.mycompany.newmark.triagem.triagemAuxiliares.PDF.PDFTratamento.tratarPDF;
 
 public class TriagemPericial implements TriagemStrategy {
@@ -29,6 +28,7 @@ public class TriagemPericial implements TriagemStrategy {
         Tratamento tratamento = new Tratamento();
         BuscarEtiquetaBanco triagem = new BuscarEtiquetaBanco();
         LeituraPDF pdf = new LeituraPDF();
+        TriagemAuxilioGeral geral = new TriagemAuxilioGeral();
         String linhaMovimentacao = "";
         String processo = "";
         resultado.setLocal("LAUDO PERICIAL");

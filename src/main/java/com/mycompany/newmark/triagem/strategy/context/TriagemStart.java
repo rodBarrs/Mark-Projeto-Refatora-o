@@ -65,7 +65,7 @@ public class TriagemStart {
 				if (grid == false) {
 					return true;
 				} else {
-					definirEstrategia(resultado, configuracao);
+					definirEstrategia(resultado, configuracao, triagemStrategy);
 					resultado = triagemStrategy.realizarTriagem(driver,wait,configuracao,bancos);
 
 					//Fecha a janela do processo e volta para a janela do grid
@@ -148,8 +148,8 @@ public class TriagemStart {
 		erro.getDialogPane().setExpandableContent(expContent);
 		return exceptionText;
 	}
-	private static void definirEstrategia(ChavesResultado resultado, ChavesConfiguracao config) {
-		TriagemStrategy triagemStrategy;
+	private static void definirEstrategia(ChavesResultado resultado, ChavesConfiguracao config, TriagemStrategy triagemStrategy) {
+
 		//Setar todas as configurações especificas nesses ifs
 		if (config.isLaudoPericial() == true) {
 			triagemStrategy = new TriagemPericial();

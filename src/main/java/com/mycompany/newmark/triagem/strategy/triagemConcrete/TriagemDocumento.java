@@ -25,11 +25,12 @@ import java.util.List;
 import static com.mycompany.newmark.triagem.triagemAuxiliares.PDF.PDFTratamento.tratarPDF;
 import static com.mycompany.newmark.triagem.triagemAuxiliares.PDF.PDFTratamento.verificarPDF;
 import static com.mycompany.newmark.triagem.triagemAuxiliares.TriagemAuxilioGeral.carregaMovimentacaoAtual;
+import static com.mycompany.newmark.triagem.triagemAuxiliares.TriagemAuxilioGeral.tratarHMTL;
 import static com.mycompany.newmark.triagem.triagemAuxiliares.TriagemPasta.verificarPasta;
 
 
 public class TriagemDocumento implements TriagemStrategy {
-static TriagemAuxilioGeral geral = new TriagemAuxilioGeral();
+
     @Override
     public ChavesResultado realizarTriagem(WebDriver driver, WebDriverWait wait, ChavesConfiguracao configuracao, String bancos) throws SQLException, IOException, InterruptedException, UnsupportedFlavorException {
         LeituraPDF pdf = new LeituraPDF();
@@ -38,6 +39,7 @@ static TriagemAuxilioGeral geral = new TriagemAuxilioGeral();
         BuscarEtiquetaBanco triagem = new BuscarEtiquetaBanco();
         VerificarData verificarData = new VerificarData();
         BuscarCondicaoBanco condicao = new BuscarCondicaoBanco();
+        TriagemAuxilioGeral geral = new TriagemAuxilioGeral();
         TriagemPasta triagemPasta = new TriagemPasta();
         String linhaMovimentacao = "";
         String condicaoProv = "PRO";
@@ -75,7 +77,7 @@ static TriagemAuxilioGeral geral = new TriagemAuxilioGeral();
                          if (isPDF) {
                             processo = tratarPDF(driver, wait, pdf, processo, i);
                         } else {
-                            processo = geral.tratarHMTL(driver, wait, i);
+                            processo = tratarHMTL(driver, wait, i);
                         }
 
                         if(!existePasta) {

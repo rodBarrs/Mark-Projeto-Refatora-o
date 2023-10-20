@@ -32,7 +32,7 @@ public class TriagemAuxilioGeral {
         return processo;
     }
 
-    public String tratarHMTL(WebDriver driver, WebDriverWait wait, int i) throws InterruptedException, UnsupportedFlavorException, IOException {
+    public static String tratarHMTL(WebDriver driver, WebDriverWait wait, int i) throws InterruptedException, UnsupportedFlavorException, IOException {
         String processo;
         WebElement ele = driver.findElement(By.xpath("//tr[" + i + "]/td/div"));
         ele.click();

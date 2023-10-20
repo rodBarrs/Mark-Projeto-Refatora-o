@@ -7,5 +7,4 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public interface TriagemStrategy {
     ChavesResultado realizarTriagem(WebDriver driver, WebDriverWait wait, ChavesConfiguracao configuracao, String bancos) throws Exception;
 
-
 }
