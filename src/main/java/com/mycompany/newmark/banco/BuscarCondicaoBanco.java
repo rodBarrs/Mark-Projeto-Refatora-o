@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class BuscarCondicaoBanco {
     ConnectionFactory connectionFactory = new ConnectionFactory();
     public boolean verificaCondicao(String processo, String tipo, String banco ) throws SQLException {
-        Connection connection = connectionFactory.obterConexao();
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:BancoEtiquetasMark.db");
         PreparedStatement stmt;
         ResultSet resultSet;
 

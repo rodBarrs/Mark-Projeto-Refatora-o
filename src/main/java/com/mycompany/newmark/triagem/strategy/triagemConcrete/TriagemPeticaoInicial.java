@@ -169,7 +169,6 @@ public class TriagemPeticaoInicial implements TriagemStrategy {
 
 
                                         String nucleo = resultado.getEtiqueta();
-                                        //				 resultado = triagemPadrao(driver, wait, config, banco, i, true, nucleo);
                                         resultado.setDriver(driver);
                                         return resultado;
                                     }

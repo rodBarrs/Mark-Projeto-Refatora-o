@@ -133,9 +133,8 @@ public class IdentificadorMateriaDAO {
 	}
 
 	private List<ChavesBanco> extrairChaveIdentificadorMateria(ResultSet resultSet) throws SQLException {
-		List<ChavesBanco> identificadoresMateria = null;
+		List<ChavesBanco> identificadoresMateria = new ArrayList<>();
 		while (resultSet.next()) {
-			identificadoresMateria = new ArrayList<>();
 			ChavesBanco chave = new ChavesBanco();
 			chave.setID(resultSet.getInt("id"));
 			chave.setPALAVRACHAVE(resultSet.getString("palavrachave"));

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany</groupId>
@@ -125,18 +125,17 @@
 			<version>3.5.2</version>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.seleniumhq.selenium</groupId>-->
-<!--			<artifactId>selenium-chrome-driver</artifactId>-->
-<!--		</dependency>-->
-		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+		<!--		<dependency>-->
+		<!--			<groupId>org.seleniumhq.selenium</groupId>-->
+		<!--			<artifactId>selenium-chrome-driver</artifactId>-->
+		<!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>5.5.0</version>
+			<version>3.12.4</version> <!-- A versão correta -->
 			<scope>test</scope>
 		</dependency>
-
 
 		<!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
 		<dependency>
@@ -157,7 +156,7 @@
 			<artifactId>jfoenix</artifactId>
 			<version>8.0.8</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -196,7 +195,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>5.5.0</version>
+			<version>3.12.4</version>
 			<scope>compile</scope>
 		</dependency>
 

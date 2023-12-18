@@ -32,14 +32,15 @@ public class IdentificadorPeticaoInicialDAO {
 		return listaIdentificadoresPeticaoInicial;
 	}
 
-	public void inserirIdentificadorPeticaoInicial(String identificadorPeticao) {
+	public void inserirIdentificadorPeticaoInicial(String identificadorPeticao,String banco) {
 		
-		final String SQL = "INSERT INTO condicao (texto, tipo) VALUES (?, ?)";
+		final String SQL = "INSERT INTO condicao (texto, tipo, banco) VALUES (?, ?,?)";
 		
 		try (Connection connection = new ConnectionFactory().obterConexao();
 				PreparedStatement stmt = connection.prepareStatement(SQL)){
 			stmt.setString(1, identificadorPeticao);
 			stmt.setString(2, "PET");
+			stmt.setString(3, banco);
 			stmt.execute();
 			controllerAviso.exibir("Item inserido");
 		} catch (Exception e) {

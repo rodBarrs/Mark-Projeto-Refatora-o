@@ -26,6 +26,7 @@ import com.mycompany.newmark.banco.ConnectionFactory;
 import com.mycompany.newmark.models.ChavesBanco;
 import com.mycompany.newmark.models.ChavesCondicao;
 import com.mycompany.newmark.models.ChavesConfiguracao;
+import com.mycompany.newmark.models.ChavesTeste;
 import com.sun.glass.events.KeyEvent;
 
 import javafx.event.ActionEvent;
@@ -96,9 +97,10 @@ public class ControllerConfiguracao implements Initializable {
 		SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 30);
 		spinnerDias.setValueFactory(valueFactory);
 
+		ChavesTeste teste = new ChavesTeste();
 		ChavesConfiguracao configuracao = new ChavesConfiguracao();
 		Banco banco = new Banco();
-		configuracao = banco.pegarConfiguracao(configuracao);
+		configuracao = banco.pegarConfiguracao(configuracao, teste);
 		if (configuracao.getIntervaloDias() == -1) {
 			spinnerDias.setDisable(true);
 			triarAntigo.setSelected(true);

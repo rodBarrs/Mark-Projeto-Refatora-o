@@ -168,22 +168,22 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <JFXButton fx:id="inserirIdentificadorPeticao" alignment="CENTER" contentDisplay="CENTER" layoutX="887.0" layoutY="174.0" onAction="#inserirIdentificadorPeticao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Inserir Registro">
+                                    <JFXButton fx:id="inserirIdentificadorPeticao" alignment="CENTER" contentDisplay="CENTER" layoutX="887.0" layoutY="216.0" onAction="#inserirIdentificadorPeticao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Inserir Registro">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton fx:id="excluirIdentificadorPeticao" alignment="CENTER" contentDisplay="CENTER" layoutX="1083.0" layoutY="174.0" onAction="#excluirIdentificadorPeticao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoVermelho" stylesheets="@../styles/botoes.css" text="Excluir Registro">
+                                    <JFXButton fx:id="excluirIdentificadorPeticao" alignment="CENTER" contentDisplay="CENTER" layoutX="1083.0" layoutY="216.0" onAction="#excluirIdentificadorPeticao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoVermelho" stylesheets="@../styles/botoes.css" text="Excluir Registro">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton layoutX="1135.0" layoutY="267.0" onAction="#retornaMenu" prefHeight="25.0" prefWidth="132.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Voltar">
+                                    <JFXButton layoutX="1136.0" layoutY="296.0" onAction="#retornaMenu" prefHeight="25.0" prefWidth="132.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Voltar">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <Separator layoutX="887.0" layoutY="244.0" prefHeight="19.0" prefWidth="380.0" />
+                                    <Separator layoutX="888.0" layoutY="277.0" prefHeight="19.0" prefWidth="380.0" />
                                     <Label layoutX="886.0" layoutY="565.0" prefHeight="17.0" prefWidth="108.0" text="Total de Etiquetas:" textFill="#f5f5f5">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
@@ -199,11 +199,12 @@
                                           <Image url="@Imagens/MarkBranco.png" />
                                        </image>
                                     </ImageView>
-                                    <JFXButton fx:id="atualizarIdentificadorPeticao" layoutX="1083.0" layoutY="209.0" onAction="#inicializarMenuPeticaoInicial" prefHeight="27.0" prefWidth="185.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Atualizar Tabela">
+                                    <JFXButton fx:id="atualizarIdentificadorPeticao" layoutX="1083.0" layoutY="250.0" onAction="#inicializarMenuPeticaoInicial" prefHeight="27.0" prefWidth="185.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Atualizar Tabela">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
+                                    <JFXComboBox fx:id="comboBoxBancosMovPet" focusColor="WHITE" layoutX="887.0" layoutY="172.0" prefHeight="25.0" prefWidth="385.0" promptText="Selecione o Banco" unFocusColor="WHITE" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -386,22 +387,22 @@
                                        </font>
                                     </Label>
                                     <JFXTextField fx:id="tipoMovimentacao" focusColor="WHITE" labelFloat="true" layoutX="887.0" layoutY="127.0" prefHeight="25.0" prefWidth="380.0" promptText="Tipo de Movimentação" styleClass="TextField" stylesheets="@../styles/dark_theme.css" unFocusColor="#fcfcfc" />
-                                    <JFXButton fx:id="botaoInserir111" alignment="CENTER" contentDisplay="CENTER" layoutX="1083.0" layoutY="172.0" onAction="#inserirTipoMovimentacao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Inserir Registro">
+                                    <JFXButton fx:id="botaoInserir111" alignment="CENTER" contentDisplay="CENTER" layoutX="1083.0" layoutY="214.0" onAction="#inserirTipoMovimentacao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Inserir Registro">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton fx:id="botaoExcluir111" alignment="CENTER" contentDisplay="CENTER" layoutX="888.0" layoutY="172.0" onAction="#excluirTipoMovimentacao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoVermelho" stylesheets="@../styles/botoes.css" text="Excluir Registro">
+                                    <JFXButton fx:id="botaoExcluir111" alignment="CENTER" contentDisplay="CENTER" layoutX="887.0" layoutY="214.0" onAction="#excluirTipoMovimentacao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoVermelho" stylesheets="@../styles/botoes.css" text="Excluir Registro">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton fx:id="botaoVoltar111" layoutX="1136.0" layoutY="256.0" onAction="#retornaMenu" prefHeight="25.0" prefWidth="132.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Voltar">
+                                    <JFXButton fx:id="botaoVoltar111" layoutX="1136.0" layoutY="296.0" onAction="#retornaMenu" prefHeight="25.0" prefWidth="132.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Voltar">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <Separator layoutX="888.0" layoutY="235.0" prefHeight="19.0" prefWidth="380.0" />
+                                    <Separator layoutX="888.0" layoutY="277.0" prefHeight="19.0" prefWidth="380.0" />
                                     <Label layoutX="886.0" layoutY="565.0" prefHeight="17.0" prefWidth="108.0" text="Total de Etiquetas:" textFill="#f5f5f5">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
@@ -412,11 +413,12 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXTextField>
-                                    <JFXButton fx:id="atualizar1" layoutX="1083.0" layoutY="207.0" onAction="#inicializarMenuTriagemPadrao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Atualizar Tabela">
+                                    <JFXButton fx:id="atualizar1" layoutX="1083.0" layoutY="250.0" onAction="#inicializarMenuTriagemPadrao" prefHeight="27.0" prefWidth="185.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Atualizar Tabela">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
+                                    <JFXComboBox fx:id="comboBoxBancosMov" focusColor="WHITE" layoutX="886.0" layoutY="176.0" prefHeight="25.0" prefWidth="384.0" promptText="selecione o banco" unFocusColor="WHITE" />
                                  </children>
                               </AnchorPane>
                           </content>

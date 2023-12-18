@@ -28,15 +28,17 @@ ConnectionFactory connectionFactory = new ConnectionFactory();
 
 				try (PreparedStatement stmt = connection.prepareStatement(query)) {
 					if (!configuracao.isPeticaoInicial()) {
-						stmt.setString(1, resultado.getLocal());
+						stmt.setString(1, configuracao.getTipoTriagem());
 					}
 
 					ResultSet resultSet = stmt.executeQuery();
-
+					String bancoFromDB = "";
 					while (resultSet.next()) {
 						String palavraChave = tratamento.tratamento(resultSet.getString("palavrachave"));
 						String complemento = tratamento.tratamento(resultSet.getString("complemento"));
-						String bancoFromDB = resultSet.getString("banco");
+						if(!configuracao.isPeticaoInicial()){
+							bancoFromDB = resultSet.getString("banco");
+						}
 
 						if (processo.contains(palavraChave) && processo.contains(complemento) &&
 								(bancoFromDB.contains(banco) || banco.contains("TODOS OS BANCOS"))) {

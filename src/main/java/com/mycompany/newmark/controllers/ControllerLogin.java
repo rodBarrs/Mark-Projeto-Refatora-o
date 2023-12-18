@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import com.mycompany.newmark.banco.Banco;
+import com.mycompany.newmark.models.ChavesTeste;
 import com.mycompany.newmark.triagem.strategy.context.TriagemStart;
 import com.mycompany.newmark.models.ChavesConfiguracao;
 import com.mycompany.newmark.models.Usuario;
@@ -118,9 +119,10 @@ public class ControllerLogin implements Initializable {
 
 	public void saida() {
 		try {
+			ChavesTeste teste = new ChavesTeste();
 			ChavesConfiguracao configuracao = new ChavesConfiguracao();
 			Banco banco = new Banco();
-			configuracao = banco.pegarConfiguracao(configuracao);
+			configuracao = banco.pegarConfiguracao(configuracao,teste);
 			StringBuilder saidaText = new StringBuilder("CONFIGURAÇÕES:");
 
 			if (configuracao.getIntervaloDias() == -1) {
@@ -342,7 +344,8 @@ public class ControllerLogin implements Initializable {
 						SaidaTriagem.setText("- Triagem Iniciada!");
 						BarraDeProgresso.setVisible(true);
 						TriagemStart triagem = new TriagemStart(driver, bancoSelecionado);
-						boolean triar = triagem.iniciarTriagem(driver, wait, bancoSelecionado);
+						ChavesTeste teste = new ChavesTeste();
+						boolean triar = triagem.iniciarTriagem(driver, wait, bancoSelecionado, teste);
 						if (triar == false) {
 							som();
 							SaidaTriagem.setText("- Erro de comunicação com plataforma Sapiens!");
@@ -389,13 +392,15 @@ public class ControllerLogin implements Initializable {
 
 	@FXML
 	public void login() throws InterruptedException, IOException {
+		boolean isTeste = false;
+		ChavesTeste teste = new ChavesTeste();
 		som();
 		Banco banco = new Banco();
 		Usuario usuario = criarUsuario(banco);
-		configurarGeckoDriver(usuario);
+		configurarGeckoDriver(usuario, teste);
 	}
 
-	private void configurarGeckoDriver(Usuario usuario) throws IOException {
+	public void configurarGeckoDriver(Usuario usuario, ChavesTeste teste) throws IOException {
 		try {
 			if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
 				System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
@@ -422,9 +427,13 @@ public class ControllerLogin implements Initializable {
 
 		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 		capabilities.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, 1);
-		final WebDriver driver = new FirefoxDriver(capabilities);
 
+		final WebDriver driver = new FirefoxDriver(capabilities);
 		wait = new WebDriverWait(driver, 15);
+
+		teste.setDriver(driver);
+		teste.setWait(wait);
+
 		try {
 			String url = "https://sapiens.agu.gov.br/login";
 			driver.get(url);
@@ -432,8 +441,10 @@ public class ControllerLogin implements Initializable {
 
 			usuario.logar(driver, wait, usuario);
 			this.driver = driver;
+			if(!teste.isTeste())
 			SaidaTriagem.setText("- Login Realizado!");
 		} catch (Exception erro) {
+			if(!teste.isTeste())
 			SaidaTriagem.setText("- Erro de comunicação!");
 			erro.printStackTrace();
 			Logger.getLogger(ChavesConfiguracao.class.getName()).log(Level.SEVERE, null, erro);

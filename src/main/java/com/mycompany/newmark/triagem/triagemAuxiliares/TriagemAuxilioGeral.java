@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class TriagemAuxilioGeral {
 
-    public  String copiarConteudo(WebDriver driver) throws InterruptedException, UnsupportedFlavorException, IOException {
+    public static String copiarConteudo(WebDriver driver) throws InterruptedException, UnsupportedFlavorException, IOException {
         String processo;
         Actions action = new Actions(driver);
 //
@@ -56,7 +56,7 @@ public class TriagemAuxilioGeral {
 
         } while (flag);
 
-        processo = this.copiarConteudo(driver);
+        processo = copiarConteudo(driver);
         return processo;
     }
 

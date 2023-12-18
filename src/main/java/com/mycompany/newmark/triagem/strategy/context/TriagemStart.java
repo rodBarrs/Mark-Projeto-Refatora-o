@@ -1,6 +1,6 @@
 /**
  * @author Felipe Marques, Gabriel Ramos, Rafael Henrique e Adriano Vilhena 
- * 
+ *
  */
 package com.mycompany.newmark.triagem.strategy.context;
 
@@ -9,11 +9,13 @@ import java.io.StringWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.mycompany.newmark.auxiliares.email.UtilEmail;
 import com.mycompany.newmark.banco.Banco;
 import com.mycompany.newmark.models.ChavesConfiguracao;
 import com.mycompany.newmark.models.ChavesResultado;
+import com.mycompany.newmark.models.ChavesTeste;
 import com.mycompany.newmark.triagem.triagemAuxiliares.TriagemEtiqueta;
 import com.mycompany.newmark.triagem.triagemAuxiliares.TriagemGridMenu;
 import com.mycompany.newmark.triagem.strategy.triagemAbstract.TriagemStrategy;
@@ -21,7 +23,10 @@ import com.mycompany.newmark.triagem.strategy.triagemConcrete.TriagemDocumento;
 import com.mycompany.newmark.triagem.strategy.triagemConcrete.TriagemMovimentacao;
 import com.mycompany.newmark.triagem.strategy.triagemConcrete.TriagemPericial;
 import com.mycompany.newmark.triagem.strategy.triagemConcrete.TriagemPeticaoInicial;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -46,17 +51,19 @@ public class TriagemStart {
 	}
 
 	//Inicia a Triagem
-	public boolean iniciarTriagem(WebDriver driver, WebDriverWait wait, String bancos) {
+	public boolean iniciarTriagem(WebDriver driver, WebDriverWait wait, String bancos, ChavesTeste teste) throws InterruptedException {
 		ChavesResultado resultado = new ChavesResultado();
 		resultado.setEtiqueta("NÃO FOI POSSÍVEL LOCALIZAR FRASE CHAVE ATUALIZADA");
 		resultado.setDriver(driver);
 		ChavesConfiguracao configuracao = new ChavesConfiguracao();
 		Banco banco = new Banco();
-		configuracao = banco.pegarConfiguracao(configuracao);
+		configuracao = banco.pegarConfiguracao(configuracao, teste);
 		TriagemGridMenu triagem_grid = new TriagemGridMenu(resultado.getDriver());
 		TriagemEtiqueta etiqueta = new TriagemEtiqueta();
-		TriagemStrategy triagemStrategy = null;
 		boolean grid;
+
+
+
 		try {
 
 			do {
@@ -65,7 +72,7 @@ public class TriagemStart {
 				if (grid == false) {
 					return true;
 				} else {
-					definirEstrategia(resultado, configuracao, triagemStrategy);
+					TriagemStrategy triagemStrategy = definirEstrategia(configuracao);
 					resultado = triagemStrategy.realizarTriagem(driver,wait,configuracao,bancos);
 
 					//Fecha a janela do processo e volta para a janela do grid
@@ -98,6 +105,44 @@ public class TriagemStart {
 			return true;
 		}
 		return true;
+	}
+
+	private static void filtrarTeste(WebDriver driver, WebDriverWait wait, TriagemEtiqueta etiqueta, ChavesTeste teste) throws InterruptedException {
+		Thread.sleep(1000);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By
+				.xpath("/html/body/div[4]/div[1]/div[2]/div/div[2]/div/div[4]/div/table/tbody/tr[1]/td[3]/div/a[1]")));
+		wait.until(ExpectedConditions.elementToBeClickable(By
+				.xpath("/html/body/div[4]/div[1]/div[2]/div/div[2]/div/div[4]/div/table/tbody/tr[1]/td[3]/div/a[1]")));
+
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS).pageLoadTimeout(30, TimeUnit.SECONDS);
+		WebElement setaAparecer = driver.findElement(
+				By.xpath("/html/body/div[4]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div/div[33]/div/span"));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By
+				.xpath("/html/body/div[4]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div/div[33]/div/span")));
+		setaAparecer.click();
+		WebElement seta = driver.findElement(
+				By.xpath("/html/body/div[4]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div/div[33]/div/div"));
+		seta.click();
+
+
+		WebElement filtro = driver.findElement(By.xpath("/html/body/div[11]/div/div[2]/div/div[6]/a/div[1]"));
+		filtro.click();
+		WebElement filtroEs = driver.findElement(By.xpath("/html/body/div[13]/div/div[2]"));
+		filtroEs.click();
+		WebElement filtroSpace = driver
+				.findElement(By.xpath("/html/body/div[13]/div/div[2]/div/table/tbody/tr/td[2]/input"));
+		filtroSpace.click();
+		System.out.println("etiqueta no filtro: " + etiqueta);
+		filtroSpace.sendKeys(teste.getFiltro());
+		Thread.sleep(1000);
+		long time = 100;
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(By
+				.xpath("/html/body/div[4]/div[1]/div[2]/div/div[2]/div/div[2]/div/div/div[7]")));
+		wait.until(ExpectedConditions.elementToBeClickable(By
+				.xpath("/html/body/div[4]/div[1]/div[2]/div/div[2]/div/div[2]/div/div/div[7]")));
+		Thread.sleep(1000);
 	}
 
 	private static void enviarEmail(String exceptionText) {
@@ -148,29 +193,23 @@ public class TriagemStart {
 		erro.getDialogPane().setExpandableContent(expContent);
 		return exceptionText;
 	}
-	private static void definirEstrategia(ChavesResultado resultado, ChavesConfiguracao config, TriagemStrategy triagemStrategy) {
-
+	private static TriagemStrategy definirEstrategia(ChavesConfiguracao config) {
+		TriagemStrategy triagemStrategy = null;
 		//Setar todas as configurações especificas nesses ifs
 		if (config.isLaudoPericial() == true) {
-			triagemStrategy = new TriagemPericial();
+			 return triagemStrategy = new TriagemPericial();
 		} else if (config.isPeticaoInicial() == true) {
-			triagemStrategy = new TriagemPeticaoInicial();
+			return  triagemStrategy = new TriagemPeticaoInicial();
 		} else {
 			switch (config.getTipoTriagem()) {
 				case "COM":
-					triagemStrategy = new TriagemMovimentacao();
-					if (resultado.getEtiqueta().contains("NÃO FOI POSSÍVEL LOCALIZAR FRASE CHAVE ATUALIZADA")) {
-						triagemStrategy = new TriagemDocumento();
-					}
-					break;
+					return triagemStrategy = new TriagemMovimentacao();
 				case "MOV":
-					triagemStrategy = new TriagemMovimentacao();
-					break;
+					return triagemStrategy = new TriagemMovimentacao();
 				case "DOC":
-					triagemStrategy = new TriagemDocumento();
-					;
-					break;
+					return triagemStrategy = new TriagemDocumento();
 			}
 		}
+		return triagemStrategy;
 	}
 }

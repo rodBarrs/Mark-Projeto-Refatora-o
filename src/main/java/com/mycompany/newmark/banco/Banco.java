@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import com.mycompany.newmark.controllers.ControllerAviso;
 import com.mycompany.newmark.models.ChavesConfiguracao;
+import com.mycompany.newmark.models.ChavesTeste;
 import com.mycompany.newmark.models.Usuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -180,27 +181,65 @@ public class Banco {
 	public void contarMov() throws SQLException {
 		updateContador("ContSeq");
 	}
-	public ChavesConfiguracao pegarConfiguracao(ChavesConfiguracao config) {
+	public ChavesConfiguracao pegarConfiguracao(ChavesConfiguracao config, ChavesTeste teste) {
 		try {
-			Connection connection = connectionFactory.obterConexao();
+			Integer TriarAntigo;
+			boolean JuntManual;
+			boolean LaudoPericial;
+			boolean PeticaoInicial;
+			boolean Concatenacao;
+
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:BancoEtiquetasMark.db");
 			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM configuracao WHERE id = 1997");
 			ResultSet resultadoBanco = stmt.executeQuery();
+			while (resultadoBanco.next()) {
+				TriarAntigo = resultadoBanco.getInt("TriarAntigo");
 
-			if (resultadoBanco.next()) {
-				config.setIntervaloDias(resultadoBanco.getInt("TriarAntigo"));
-				config.setTipoTriagem(resultadoBanco.getString("TipoTriagem"));
-				config.setJuntManual(resultadoBanco.getBoolean("JuntManual"));
-				config.setLaudoPericial(resultadoBanco.getBoolean("LaudoPericial"));
-				config.setPeticaoInicial(resultadoBanco.getBoolean("PeticaoInicial"));
-				config.setConcatenacao(resultadoBanco.getBoolean("Concatenacao"));
+				String TipoTriagemLocal = resultadoBanco.getString("TipoTriagem");
+
+				String JuntManualString = resultadoBanco.getString("JuntManual");
+				if (JuntManualString.contains("false")) {
+					JuntManual = false;
+				} else {
+					JuntManual = true;
+				}
+
+				String LaudoPericialString = resultadoBanco.getString("LaudoPericial");
+				if (LaudoPericialString.contains("false")) {
+					LaudoPericial = false;
+				} else {
+					LaudoPericial = true;
+				}
+
+				String PeticaoInicialString = resultadoBanco.getString("PeticaoInicial");
+				if (PeticaoInicialString.contains("false")) {
+					PeticaoInicial = false;
+				} else {
+					PeticaoInicial = true;
+				}
+
+				String ConcatenacaoString = resultadoBanco.getString("Concatenacao");
+				if (ConcatenacaoString.contains("false")) {
+					Concatenacao = false;
+				} else {
+					Concatenacao = true;
+				}
+				if(teste.isTeste() && teste.getModo().equals("PADRÃO")){
+					PeticaoInicial = false;
+				}else if (teste.isTeste() && teste.getModo().equals("PETIÇÃO")) {
+					PeticaoInicial = true;
+				}
+
+				config.setIntervaloDias(TriarAntigo);
+				config.setTipoTriagem(TipoTriagemLocal);
+				config.setJuntManual(JuntManual);
+				config.setLaudoPericial(LaudoPericial);
+				config.setPeticaoInicial(PeticaoInicial);
+				config.setConcatenacao(Concatenacao);
 			}
-
 			connection.close();
-		} catch (SQLException erro) {
-			ControllerAviso controllerAviso = new ControllerAviso();
-			controllerAviso.exibir(erro.getMessage());
-			erro.printStackTrace();
-			Logger.getLogger(ChavesConfiguracao.class.getName()).log(Level.SEVERE, null, erro);
+		} catch (Exception erro) {
+
 		}
 		return config;
 	}

@@ -12,7 +12,6 @@ public class ChavesConfiguracao {
     private boolean JuntManual;
     private boolean LaudoPericial;
     private boolean PeticaoInicial;
-
     private boolean concatenacao;
     private boolean debugpi = false;
         

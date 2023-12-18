@@ -49,7 +49,7 @@ public class ControllerAdministracao implements Initializable {
 	@FXML
 	private JFXPasswordField textoSenhaUsuario;
 	@FXML
-	private JFXComboBox<String> comboBoxBancos, comboBoxNucleo, comboBoxBancosMov;
+	private JFXComboBox<String> comboBoxBancos, comboBoxNucleo, comboBoxBancosMov, comboBoxBancosMovPet;
 	@FXML
 	private TableView<ChavesGrupoEtiquetas> tabelaBancos;
 	@FXML
@@ -103,12 +103,18 @@ public class ControllerAdministracao implements Initializable {
 	private void inicializarTabelaIdentificadorPeticaoInicial() {
 		List<ChavesCondicao> listaIdentificadorPeticao = new IdentificadorPeticaoInicialDAO()
 				.getTabelaIdentificadorPeticaoInicial();
-
+		comboBoxBancosMovPet.setItems(new Banco().setarBanco());
+		try {
+			comboBoxBancosMovPet.getItems().remove(0);
+			comboBoxBancosMovPet.getSelectionModel().selectFirst();
+		} catch (Exception e) {
+		}
 		colunaIdentificadorPeticaoInicial
 				.setCellValueFactory(new PropertyValueFactory<ChavesCondicao, String>("TEXTO"));
 		ObservableList<ChavesCondicao> identPeticao = FXCollections.observableArrayList(listaIdentificadorPeticao);
 		tabelaIdentificadorPeticao.setItems(identPeticao);
 		numeroPeticaoInicial.setText(String.valueOf(tabelaIdentificadorPeticao.getItems().size()));
+
 	}
 
 	private void inicializarTabelaIdentificadorMateria() {
@@ -140,6 +146,12 @@ public class ControllerAdministracao implements Initializable {
 
 	private void inicializarTabelaTiposMovimentacao() {
 	//	inicializarComboBoxBancos(comboBoxBancosMov);
+		comboBoxBancosMov.setItems(new Banco().setarBanco());
+		try {
+			comboBoxBancosMov.getItems().remove(0);
+			comboBoxBancosMov.getSelectionModel().selectFirst();
+		} catch (Exception e) {
+		}
 		List<ChavesCondicao> listaTiposMovimentacao = new TipoMovimentacaoDAO().getTabelaTipoMovimentacao();
 		colunaTipoMovimento.setCellValueFactory(new PropertyValueFactory<ChavesCondicao, String>("TEXTO"));
 		ObservableList<ChavesCondicao> tiposMovimentacao = FXCollections.observableArrayList(listaTiposMovimentacao);
@@ -342,10 +354,11 @@ public class ControllerAdministracao implements Initializable {
 
 	public void inserirIdentificadorPeticao() {
 		String identificadorPeticao = identificadorPeticaoInicial.getText().toUpperCase();
+		String banco = comboBoxBancosMovPet.getSelectionModel().getSelectedItem().substring(0, 3);
 		if (identificadorPeticao.isEmpty()) {
 			new ControllerAviso().exibir("Revise os campos");
 		} else {
-			new IdentificadorPeticaoInicialDAO().inserirIdentificadorPeticaoInicial(identificadorPeticao);
+			new IdentificadorPeticaoInicialDAO().inserirIdentificadorPeticaoInicial(identificadorPeticao, banco);
 		}
 		inicializarMenuPeticaoInicial();
 

@@ -60,53 +60,53 @@ public class TriagemDocumento implements TriagemStrategy {
             boolean PossueMovimentacaoAtual = condicao.verificaCondicao(movimentacaoAtual.getText(), condicaoProv, bancos);
             if (estaNoLimiteData && PossueMovimentacaoAtual) {
                 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//tr[" + i + "]/td/div")));
-                        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("ext-gen1020")));
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("ext-gen1020")));
 
-                        Boolean isPDF = verificarPDF(driver, i);
-                        Boolean existePasta = verificarPasta(driver, i);
+                Boolean isPDF = verificarPDF(driver, i);
+                Boolean existePasta = verificarPasta(driver, i);
 
-                        if (existePasta){
-                            limite--;
-                            resultado = triagemPasta.documentoPasta(driver, wait, configuracao, bancos,i, resultado, pdf);
-                            boolean encontrouEtiquetaNaPasta = !resultado.getEtiqueta().equals("") && !resultado.getEtiqueta().contains("NÃO FOI POSSÍVEL");
-                            if (encontrouEtiquetaNaPasta){
+                if (existePasta){
+                    limite--;
+                    resultado = triagemPasta.documentoPasta(driver, wait, configuracao, bancos,i, resultado, pdf);
+                    boolean encontrouEtiquetaNaPasta = !resultado.getEtiqueta().equals("") && !resultado.getEtiqueta().contains("NÃO FOI POSSÍVEL");
+                    if (encontrouEtiquetaNaPasta){
+                        return resultado;
+                    }
+                }
+
+                if (isPDF) {
+                    processo = tratarPDF(driver, wait, pdf, processo, i);
+                } else {
+                    processo = tratarHMTL(driver, wait, i);
+                }
+
+                if(!existePasta) {
+                    if (processo.length() > 1) {
+                        limite--;
+                        try {
+                            resultado = triagem.triarBanco(processo, bancos, resultado, configuracao);
+                            boolean encontrouEtiqueta = !resultado.getEtiqueta()
+                                    .contains("NÃO FOI POSSÍVEL LOCALIZAR FRASE CHAVE ATUALIZADA")
+                                    && !resultado.getEtiqueta().contains("ERRO EM TRIAGEM: PDF NÃO PESQUISÁVEL");
+                            if (encontrouEtiqueta) {
+                                driver.switchTo().defaultContent();
+                                linhaMovimentacao = driver.findElement(By.xpath("//tr[" + i + "]/td/div"))
+                                        .getText();
+                                resultado.setLocal("DOC " + linhaMovimentacao);
+                                resultado.setDriver(driver);
                                 return resultado;
                             }
+                        } catch (Exception erro) {
+                            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-1005-btnEl")));
+                            driver.findElement(By.id("button-1005-btnEl")).click();
+                            erro.printStackTrace();
                         }
 
-                         if (isPDF) {
-                            processo = tratarPDF(driver, wait, pdf, processo, i);
-                        } else {
-                            processo = tratarHMTL(driver, wait, i);
-                        }
-
-                        if(!existePasta) {
-                            if (processo.length() > 1) {
-                                limite--;
-                                try {
-                                    resultado = triagem.triarBanco(processo, bancos, resultado, configuracao);
-                                    boolean encontrouEtiqueta = !resultado.getEtiqueta()
-                                            .contains("NÃO FOI POSSÍVEL LOCALIZAR FRASE CHAVE ATUALIZADA")
-                                            && !resultado.getEtiqueta().contains("ERRO EM TRIAGEM: PDF NÃO PESQUISÁVEL");
-                                    if (encontrouEtiqueta) {
-                                        driver.switchTo().defaultContent();
-                                        linhaMovimentacao = driver.findElement(By.xpath("//tr[" + i + "]/td/div"))
-                                                .getText();
-                                        resultado.setLocal("DOC " + linhaMovimentacao);
-                                        resultado.setDriver(driver);
-                                        return resultado;
-                                    }
-                                } catch (Exception erro) {
-                                    wait.until(ExpectedConditions.presenceOfElementLocated(By.id("button-1005-btnEl")));
-                                    driver.findElement(By.id("button-1005-btnEl")).click();
-                                    erro.printStackTrace();
-                                }
-
-                            } else {
-                                resultado.setEtiqueta("ERRO EM TRIAGEM: INSTABILIDADE NO SAPIENS");
-                            }
-                        }
+                    } else {
+                        resultado.setEtiqueta("ERRO EM TRIAGEM: INSTABILIDADE NO SAPIENS");
                     }
+                }
+            }
 
 
             // Volta pro FOR
