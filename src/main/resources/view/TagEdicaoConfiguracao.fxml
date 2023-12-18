@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="250.0" prefWidth="500.0" styleClass="fundo" stylesheets="@../styles/tema.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+       
+      <JFXButton fx:id="salvar" buttonType="RAISED" layoutX="78.0" layoutY="174.0" onAction="#alterar" prefHeight="25.0" prefWidth="100.0" ripplerFill="#402323" styleClass="botaoAzul" stylesheets="@../styles/botoes.css" text="Salvar">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      
+      <FontAwesomeIcon disable="true" fill="WHITE" iconName="SAVE" layoutX="85.0" layoutY="194.0" size="20" />
+      <JFXButton fx:id="cancelar" buttonType="RAISED" layoutX="323.0" layoutY="174.0" onAction="#cancelar" prefHeight="25.0" prefWidth="100.0" ripplerFill="#d04848" styleClass="botaoVermelho" stylesheets="@../styles/botoes.css" text="Cancelar">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      
+      <FontAwesomeIcon disable="true" fill="WHITE" iconName="CLOSE" layoutX="330.0" layoutY="194.0" size="20" stroke="WHITE" strokeType="INSIDE" text="" wrappingWidth="17.142822265625" />
+        <JFXButton fx:id="limparCampos" buttonType="RAISED" layoutX="201.0" layoutY="174.0" onAction="#limpar" prefHeight="25.0" prefWidth="100.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Limpar" />
+      <FontAwesomeIcon iconName="BAN" layoutX="206.0" layoutY="194.0" size="20" />
+      
+      <JFXTextField fx:id="texto" focusColor="#fcfcfc" labelFloat="true" layoutX="52.0" layoutY="98.0" prefHeight="25.0" prefWidth="400.0" promptText="Condição" unFocusColor="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXTextField>
+      <Text fill="WHITE" layoutX="132.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edição de Condição cadastrada:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      
+   </children>
+ 
+       
+   
+    
+</AnchorPane>

@@ -9,13 +9,10 @@
         <module name="NewMark" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="NewMark" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="NewMark" options="-bootclasspath &quot;C:\Program Files\Java\jdk1.8.0_202\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_202\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_202\jre\classes;$PROJECT_DIR$/../../../../../Program Files/Java/jdk1.8.0_202/jre/lib/jfxrt.jar&quot;" />
+      <module name="NewMark" options="-bootclasspath C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\resources.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\rt.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\sunrsasign.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\jsse.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\jce.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\charsets.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\lib\jfr.jar;C:\Users\Rodrigo\.jdks\corretto-1.8.0_372\jre\classes;$USER_HOME$/.jdks/corretto-1.8.0_372/jre/lib/jfxrt.jar" />
     </option>
   </component>
 </project>

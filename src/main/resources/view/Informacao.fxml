@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.newmark.controllers.ControllerInformacao">
+   <children>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" styleClass="fundo" stylesheets="@../styles/tema.css">
+         <children>
+            <VBox layoutX="472.0" layoutY="49.0" prefHeight="409.0" prefWidth="398.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="411.0" text="Informações ao usuário:" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="43.0" prefWidth="397.0" text="1. Para logar na aplicação, informe seu usuário e senha do SAPIENS para que o sistema faça login automático;" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="66.0" prefWidth="392.0" text="2. Sempre insira novas PALAVRAS-CHAVES no banco de dados, quanto mais dados forem inseridos no sistema, maior será a assertividade da triagem;" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="22.0" prefWidth="392.0" text="3. Não é possível iniciar a triagem antes da realização do login;" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="85.0" prefWidth="392.0" text="4. Após o inicio do processo de triagem, evite usar o computador em que o Sistema de Triagem Mark está sendo executado, pois o mesmo simula ações humanas e interferencias externas podem acarretar erros;" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="102.0" prefWidth="392.0" text="5. Sempre que um processo NÃO FOR TRIADO, certifique-se de que as PALAVRAS-CHAVES referentes à decisão judicial estão cadastradas, se o processo judicial está escaneado da forma correta e se as CONFIGURAÇÕES de triagem estão adequadas ao processo;" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="63.0" prefWidth="394.0" text="6. Crie um Filtro na observação, e deixe ele visível no grid para que os processos sejam eliminados do grid de tarefas após a triagem." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <JFXButton fx:id="voltar" layoutX="150.0" layoutY="237.0" onAction="#retornaMenu" prefHeight="25.0" prefWidth="162.0" styleClass="botaoBranco" stylesheets="@../styles/botoes.css" text="Voltar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <FontAwesomeIcon fill="#111111" iconName="CARET_LEFT" layoutX="159.0" layoutY="256.0" size="20" />
+            <ImageView fitHeight="171.0" fitWidth="156.0" layoutX="153.0" layoutY="52.0">
+               <image>
+                  <Image url="@Imagens/LogoMarkBranco.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="59.0" layoutY="321.0" prefHeight="31.0" prefWidth="359.0" text="Versão: 3.3.0 - 09/06/2021" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Line endX="315.0" layoutX="96.0" layoutY="310.0" startX="-29.5" stroke="WHITE" />
+            <Label alignment="TOP_CENTER" layoutX="56.0" layoutY="356.0" prefHeight="102.0" prefWidth="366.0" text="A versão 3.3 do Sistema de Triagem Mark contém uma atualização vital para a automatização processual. Nesta versão o modo de triagem &quot;Petição Inicial&quot; foi adequado para atender a nova regra de negócio aplicada para a Advocacia Geral da União." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
